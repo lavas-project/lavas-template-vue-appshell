@@ -20,51 +20,45 @@ This new level of quality allows Progressive Web Apps to earn a place on the use
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
-import types from '@/store/mutation-types';
-import pageLoadingMixin from '@/mixins/pageLoadingMixin';
+import {mapActions} from 'vuex';
+import * as types from '@/store/mutation-types';
 
 export default {
     name: 'detail',
-    mixins: [pageLoadingMixin],
     props: {},
     data() {
         return {}
     },
     methods: {
-        ...mapActions([
-            'setPageLoading'
+        ...mapActions('appShell/appHeader', [
+            'setAppHeader'
+        ]),
+        ...mapActions('appShell/appBottomNavigator', [
+            'hideBottomNav'
         ])
     },
-    async mounted() {
+    async asyncData() {
         await new Promise((resolve, reject) => {
             setTimeout(resolve, 1000);
         });
-        this.setPageLoading(false);
     },
-    beforeRouteEnter(to, from, next) {
-        next(vm => {
-            vm.$store.commit(types.SET_APP_HEADER, {
-                title: 'Detail Page',
-                show: true,
-                showMenu: false,
-                showBack: true,
-                showLogo: false,
-                actions: [
-                    {
-                        icon: 'home',
-                        route: {
-                            name: 'home'
-                        }
+    activated() {
+        this.setAppHeader({
+            show: true,
+            title: 'Lavas',
+            showMenu: false,
+            showBack: true,
+            showLogo: false,
+            actions: [
+                {
+                    icon: 'home',
+                    route: {
+                        name: 'home'
                     }
-                ]
-            });
-
-            // 隐藏底部导航栏
-            vm.$store.commit(types.SET_APP_BOTTOM_NAV, {
-                show: false
-            });
+                }
+            ]
         });
+        this.hideBottomNav();
     }
 };
 </script>

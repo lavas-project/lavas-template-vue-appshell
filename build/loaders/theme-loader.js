@@ -1,4 +1,5 @@
 const loaderUtils = require('loader-utils');
+const STYLE_TAG_REG= /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
 const defaultVuetifyVariables = {
     themeColor: {
         primary: '$blue.darken-2',
@@ -68,7 +69,7 @@ module.exports = function (source) {
     const options = loaderUtils.getOptions(this);
     if (options && options.injectInVueFile) {
         // inject variables into <style> tag in every '.vue' file
-        return source.replace(/(\<style.*\>)([\S\s]*)(\<\/style\>)/, `$1${injectedTemplate}$2$3`);
+        return source.replace(STYLE_TAG_REG, `$1${injectedTemplate}$2$3`);
     }
     return `${injectedTemplate}${source}`;
 }

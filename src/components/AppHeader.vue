@@ -44,39 +44,24 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import EventBus from '@/event-bus';
 
 export default {
     name: 'appHeader',
-    props: {
-        show: {
-            type: Boolean,
-            default: true
-        },
-        showMenu: {
-            type: Boolean,
-            default: false
-        },
-        showBack: {
-            type: Boolean,
-            default: false
-        },
-        showLogo: {
-            type: Boolean,
-            default: false
-        },
-        logoIcon: {
-            type: String
-        },
-        title: {
-            type: String
-        },
-        actions: {
-            type: Array
-        },
-        loading: {
-            type: Boolean
-        }
+    computed: {
+        ...mapState('appShell/appHeader', [
+            'show',
+            'showMenu',
+            'showBack',
+            'showLogo',
+            'logoIcon',
+            'title',
+            'actions'
+        ]),
+        ...mapState('appShell', [
+            'isPageSwitching'
+        ])
     },
     methods: {
         /**
@@ -87,7 +72,7 @@ export default {
          */
         handleClick(source, {actionIdx, route} = {}) {
             // 页面正在切换中，不允许操作，防止滑动效果进行中切换
-            if (this.loading) {
+            if (this.isPageSwitching) {
                 return;
             }
             let eventData = {};

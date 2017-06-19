@@ -11,16 +11,15 @@
 
 <script>
 import {mapActions} from 'vuex';
-import pageLoadingMixin from '@/mixins/pageLoadingMixin';
 
 export default {
     name: 'notFound',
-    mixins: [pageLoadingMixin],
     methods: {
-        ...mapActions([
-            'setPageLoading',
-            'showBottomNav',
+        ...mapActions('appShell/appHeader', [
             'setAppHeader'
+        ]),
+        ...mapActions('appShell/appBottomNavigator', [
+            'hideBottomNav'
         ])
     },
     activated() {
@@ -33,7 +32,6 @@ export default {
             actions: []
         });
         this.hideBottomNav();
-        this.setPageLoading(false);
     }
 };
 </script>

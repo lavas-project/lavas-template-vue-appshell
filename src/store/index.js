@@ -13,7 +13,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default new Vuex.Store({
-    getters: {},
     modules: {
         appShell
     }

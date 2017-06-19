@@ -13,7 +13,7 @@
             :pan-options="panOptions">
             <div
                 class="app-sidebar-swipe"
-                :class="{'app-sidebar-swipe-right': this.slideFrom !== 'left'}"></div>
+                :class="{'app-sidebar-swipe-right': slideFrom !== 'left'}"></div>
         </v-touch>
 
         <!-- sidebar 内容部分 -->
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
 import AppMask from './AppMask.vue';
 
 // hammer.js 方向常量
@@ -74,33 +75,6 @@ const BOX_SHADOW_WIDTH = 12;
 export default {
     components: {
         AppMask
-    },
-    props: {
-        show: {
-            type: Boolean,
-            default: true
-        },
-        // 从左/右滑出
-        slideFrom: {
-            type: String,
-            default: 'left'
-        },
-        title: {
-            type: Object
-        },
-        blocks: {
-            type: Array
-        },
-        // 最大宽度，可以是百分比，也可以以px为单位
-        width: {
-            type: Number,
-            default: 0.75
-        },
-        // 滑动距离展示阈值
-        showWidthThreshold: {
-            type: Number,
-            default: 0.25
-        }
     },
     data() {
         return {
@@ -116,9 +90,16 @@ export default {
         };
     },
     computed: {
+        ...mapState('appShell/appSidebar', [
+            'show',
+            'slideFrom',
+            'title',
+            'blocks',
+            'width',
+            'showWidthThreshold'
+        ]),
         classList() {
             return {
-                'app-sidebar-show': this.show,
                 'app-sidebar-content-right': this.slideFrom !== 'left'
             };
         },
@@ -201,7 +182,7 @@ export default {
             }
         }
     },
-    mounted() {
+    created() {
         this.caclWidth();
     }
 };
@@ -210,7 +191,7 @@ export default {
 <style lang="stylus" scoped>
 
 // 左侧触发滑动宽度
-$swipe-width = 50px
+$swipe-width = 20px
 
 ul,li
     padding 0

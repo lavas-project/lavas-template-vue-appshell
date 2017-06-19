@@ -30,11 +30,9 @@
 <script>
 import {mapActions} from 'vuex';
 import types from '@/store/mutation-types';
-import pageLoadingMixin from '@/mixins/pageLoadingMixin';
 
 export default {
     name: 'user',
-    mixins: [pageLoadingMixin],
     data() {
         return {
             items: [
@@ -57,9 +55,10 @@ export default {
         };
     },
     methods: {
-        ...mapActions([
-            'setPageLoading',
-            'setAppHeader',
+        ...mapActions('appShell/appHeader', [
+            'setAppHeader'
+        ]),
+        ...mapActions('appShell/appBottomNavigator', [
             'showBottomNav',
             'activateBottomNav'
         ])
@@ -67,7 +66,7 @@ export default {
     activated() {
         this.setAppHeader({
             show: true,
-            title: 'VUE-PWA',
+            title: 'Lavas',
             showMenu: true,
             showBack: false,
             showLogo: true,
@@ -81,19 +80,10 @@ export default {
         // 设置当前 bottom navigator 显示的 item
         this.activateBottomNav('user');
         this.showBottomNav();
-        // 关闭加载中动画
-        this.setPageLoading(false);
     },
-    async mounted() {
-
-        // 等待 1s，模拟异步请求
+    async asyncData({store, route}) {
         await new Promise(resolve => {
             setTimeout(resolve, 1000);
-        });
-
-        // 设置模拟数据
-        this.items.forEach(item => {
-            this.$set(item, 'count', Math.floor(Math.random() * 10));
         });
     }
 };

@@ -38,11 +38,9 @@
 <script>
 import {mapActions} from 'vuex';
 import types from '@/store/mutation-types';
-import pageLoadingMixin from '@/mixins/pageLoadingMixin';
 
 export default {
     name: 'search',
-    mixins: [pageLoadingMixin],
     data() {
         return {
             query: '',
@@ -51,9 +49,10 @@ export default {
         };
     },
     methods: {
-        ...mapActions([
-            'setPageLoading',
-            'setAppHeader',
+        ...mapActions('appShell/appHeader', [
+            'setAppHeader'
+        ]),
+        ...mapActions('appShell/appBottomNavigator', [
             'hideBottomNav'
         ]),
         async search() {
@@ -109,7 +108,6 @@ export default {
     activated() {
         this.setAppHeader({show: false});
         this.hideBottomNav();
-        this.setPageLoading(false);
     }
 };
 </script>

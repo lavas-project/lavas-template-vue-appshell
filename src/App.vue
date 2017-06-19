@@ -3,33 +3,17 @@
         <div class="app-shell app-shell-bottom-navigation">
             <app-header
                 class="app-shell-header"
-                :show="appHeader.show"
-                :showMenu="appHeader.showMenu"
-                :showBack="appHeader.showBack"
-                :showLogo="appHeader.showLogo"
-                :title="appHeader.title"
-                :actions="appHeader.actions"
-                :loading="isPageSwitching"
                 @click-menu="handleClickHeaderMenu"
                 @click-back="handleClickHeaderBack">
                 <template slot="logo"></template>
             </app-header>
             <app-sidebar
-                :show="appSidebar.show"
-                :slideFrom="appSidebar.slideFrom"
-                :title="appSidebar.title"
-                :blocks="appSidebar.blocks"
                 @hide-sidebar = "handleHideSidebar"
                 @show-sidebar = "handleShowSidebar"
             >
                 <template slot="logo"><span></span></template>
             </app-sidebar>
             <div class="app-view-wrapper">
-                <v-progress-circular
-                    indeterminate
-                    :size="50"
-                    v-show="isPageLoading"
-                    class="app-view-loading"/>
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
@@ -59,18 +43,16 @@
             </div>
             <app-bottom-navigator
                 class="app-shell-footer"
-                :show="appBottomNavigator.show"
-                :navs="appBottomNavigator.navs"
                 @click-nav="handleClickBottomNav"/>
         </div>
     </div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
-import AppHeader from './components/appHeader';
-import AppSidebar from './components/appSidebar';
-import AppBottomNavigator from './components/appBottomNavigator';
+import {mapState, mapActions} from 'vuex';
+import AppHeader from '@/components/AppHeader';
+import AppSidebar from '@/components/AppSidebar';
+import AppBottomNavigator from '@/components/AppBottomNavigator';
 
 export default {
     name: 'app',
@@ -83,20 +65,21 @@ export default {
         return {};
     },
     computed: {
-        ...mapGetters([
+        ...mapState('appShell', [
             'appHeader',
-            'appSidebar',
             'appBottomNavigator',
-            'isPageLoading',
-            'isPageSwitching',
             'pageTransitionName'
         ])
     },
     methods: {
-        ...mapActions([
-            'setPageSwitching',
+        ...mapActions('appShell', [
+            'setPageSwitching'
+        ]),
+        ...mapActions('appShell/appSidebar', [
             'showSidebar',
             'hideSidebar',
+        ]),
+        ...mapActions('appShell/appBottomNavigator', [
             'activateBottomNav'
         ]),
         handleBeforeEnter() {

@@ -101,7 +101,6 @@ module.exports = {
     resolveLoader: {
         alias: {
             'svg-loader': path.join(__dirname, './loaders/svg-loader'),
-            'router-loader': path.join(__dirname, './loaders/router-loader'),
             'theme-loader': path.join(__dirname, './loaders/theme-loader')
         }
     }

@@ -24,18 +24,16 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
 import EventBus from '@/event-bus';
 
 export default {
     name: 'app-bottom-navigator',
-    props: {
-        show: {
-            type: Boolean,
-            default: true
-        },
-        navs: {
-            type: Array
-        }
+    computed: {
+        ...mapState('appShell/appBottomNavigator', [
+            'show',
+            'navs'
+        ])
     },
     methods: {
 

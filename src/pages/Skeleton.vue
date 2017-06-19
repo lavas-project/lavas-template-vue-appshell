@@ -9,17 +9,16 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
-import pageLoadingMixin from '@/mixins/pageLoadingMixin';
+import {mapActions} from 'vuex';
 
 export default {
     name: 'skeleton',
-    mixins: [pageLoadingMixin],
     methods: {
-        ...mapActions([
-            'setPageLoading',
-            'hideBottomNav',
+        ...mapActions('appShell/appHeader', [
             'setAppHeader'
+        ]),
+        ...mapActions('appShell/appBottomNavigator', [
+            'hideBottomNav'
         ])
     },
     activated() {
@@ -27,7 +26,6 @@ export default {
             show: false
         });
         this.hideBottomNav();
-        this.setPageLoading(false);
     }
 };
 </script>

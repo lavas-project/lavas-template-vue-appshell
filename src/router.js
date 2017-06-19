@@ -5,8 +5,7 @@
 
 import Vue from 'vue';
 import Router from 'vue-router';
-// <!-- INJECT_SKELETON_IMPORT -->
-import types from './store/mutation-types';
+import * as types from './store/mutation-types';
 
 // 定义切割点，异步加载路由组件
 const Home = () => import('@/pages/Home.vue');
@@ -22,7 +21,6 @@ export function createRouter() {
     const router = new Router({
         mode: 'history',
         routes: [
-            // <!-- INJECT_SKELETON_ROUTE -->
             {
                 path: '/',
                 name: 'home',
@@ -73,10 +71,10 @@ export function createRouter() {
     router.beforeEach((to, from, next) => {
         if (router.app.$store) {
             // 如果不需要切换动画，直接返回
-            if (router.app.$store.getters.needPageTransition) {
+            if (router.app.$store.state.appShell.needPageTransition) {
                 // 判断当前是前进还是后退，添加不同的动画效果
                 let pageTransitionName = isForward(to, from) ? SLIDE_LEFT : SLIDE_RIGHT;
-                router.app.$store.commit(types.SET_PAGE_TRANSITION_NAME, {pageTransitionName});
+                router.app.$store.commit(`appShell/${types.SET_PAGE_TRANSITION_NAME}`, {pageTransitionName});
             }
         }
         next();
