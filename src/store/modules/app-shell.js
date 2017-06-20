@@ -5,6 +5,7 @@
 
 import * as types from '../mutation-types';
 
+
 const state = {
 
     /**
@@ -38,7 +39,7 @@ const actions = {
      * @param {Function} commit commit
      */
     enablePageTransition({commit}) {
-        commit(tpes.ENABLE_PAGE_TRANSITION, true);
+        commit(types.ENABLE_PAGE_TRANSITION, true);
     },
 
     /**
@@ -52,6 +53,9 @@ const actions = {
 
     /**
      * 设置页面是否处于切换中
+     *
+     * @param {Function} commit commit
+     * @param {boolean} isPageSwitching isPageSwitching
      */
     setPageSwitching({commit}, isPageSwitching) {
         commit(types.SET_PAGE_SWITCHING, isPageSwitching);
@@ -59,19 +63,23 @@ const actions = {
 };
 
 const mutations = {
-    [types.SET_PAGE_SWITCHING] (state, isPageSwitching) {
+    [types.SET_PAGE_SWITCHING](state, isPageSwitching) {
         state.isPageSwitching = isPageSwitching;
     },
-    [types.SET_PAGE_TRANSITION_NAME] (state, {pageTransitionName}) {
+    [types.SET_PAGE_TRANSITION_NAME](state, {pageTransitionName}) {
         state.pageTransitionName = pageTransitionName;
     }
 };
 
+
+
 export default {
     namespaced: true,
-    state,
+    /* eslint-disable */
     actions,
     mutations,
+    state,
+    /* eslint-enable */
     modules: {
         /**
          * 顶部导航栏的数据
@@ -131,15 +139,19 @@ export default {
                 actions: []
             },
             actions: {
+
                 /**
                  * 设置顶部导航条
+                 *
+                 * @param {Function} commit commit
+                 * @param {Object} appHeader appHeader
                  */
                 setAppHeader({commit}, appHeader) {
                     commit(types.SET_APP_HEADER, appHeader);
                 }
             },
             mutations: {
-                [types.SET_APP_HEADER] (state, appHeader) {
+                [types.SET_APP_HEADER](state, appHeader) {
                     state.appHeader = Object.assign(state, appHeader);
                 }
             }
@@ -165,7 +177,7 @@ export default {
                     imageRight: '',
                     altRight: '',
                     svgRight: '',
-                    iconRight: '',
+                    iconRight: ''
                 },
                 // 最大宽度，可以是百分比，也可以以px为单位
                 width: 0.75,
@@ -226,8 +238,11 @@ export default {
                 ]
             },
             actions: {
+
                 /**
                  * 展示侧边栏
+                 *
+                 * @param {Function} commit commit
                  */
                 showSidebar({commit}) {
                     commit(types.SET_SIDEBAR_VISIBILITY, true);
@@ -235,13 +250,15 @@ export default {
 
                 /**
                  * 隐藏侧边栏
+                 *
+                 * @param {Function} commit commit
                  */
                 hideSidebar({commit}) {
                     commit(types.SET_SIDEBAR_VISIBILITY, false);
                 }
             },
             mutations: {
-                [types.SET_SIDEBAR_VISIBILITY] (state, sidebarVisibility) {
+                [types.SET_SIDEBAR_VISIBILITY](state, sidebarVisibility) {
                     state.show = sidebarVisibility;
                 }
             }
@@ -296,8 +313,11 @@ export default {
                 ]
             },
             actions: {
+
                 /**
                  * 隐藏底部导航
+                 *
+                 * @param {Function} commit commit
                  */
                 hideBottomNav({commit}) {
                     commit(types.SET_APP_BOTTOM_NAV, {show: false});
@@ -305,6 +325,8 @@ export default {
 
                 /**
                  * 显示底部导航
+                 *
+                 * @param {Function} commit commit
                  */
                 showBottomNav({commit}) {
                     commit(types.SET_APP_BOTTOM_NAV, {show: true});
@@ -312,13 +334,16 @@ export default {
 
                 /**
                  * 激活底部导航
+                 *
+                 * @param {Function} commit commit
+                 * @param {string} name name
                  */
                 activateBottomNav({commit}, name) {
                     commit(types.ACTIVATE_APP_BOTTOM_NAV, name);
                 }
             },
             mutations: {
-                [types.ACTIVATE_APP_BOTTOM_NAV] (state, name) {
+                [types.ACTIVATE_APP_BOTTOM_NAV](state, name) {
                     state.navs = state.navs.map(nav => {
                         if (nav.name === name) {
                             nav.active = true;
@@ -329,7 +354,7 @@ export default {
                         return nav;
                     });
                 },
-                [types.SET_APP_BOTTOM_NAV] (state, appBottomNavigator) {
+                [types.SET_APP_BOTTOM_NAV](state, appBottomNavigator) {
                     state = Object.assign(state, appBottomNavigator);
                 }
             }

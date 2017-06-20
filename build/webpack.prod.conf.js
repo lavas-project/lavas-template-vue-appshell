@@ -98,9 +98,9 @@ var webpackConfig = merge(baseWebpackConfig, {
         new WebpackCdnPlugin({
             modules: [
                 {
-                    name: 'vue',
-                    var: 'Vue',
-                    path: 'dist/vue.runtime.min.js'
+                    'name': 'vue',
+                    'var': 'Vue',
+                    'path': 'dist/vue.runtime.min.js'
                 }
             ]
         }),
