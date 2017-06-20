@@ -21,6 +21,11 @@ export default {
             'showBottomNav'
         ])
     },
+    async asyncData() {
+        await new Promise((resolve, reject) => {
+            setTimeout(resolve, 1000);
+        });
+    },
     activated() {
         this.setAppHeader({
             show: true,

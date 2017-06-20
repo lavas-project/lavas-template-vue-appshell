@@ -227,6 +227,10 @@ a
     
     &.app-sidebar-content-right
         box-shadow -3px 0 8px 1px rgba(0, 0, 0, 0.4)
+        
+        &.app-sidebar-title,
+        &.app-sidebar-blocks
+            text-align right
 
     .app-sidebar-title-left-icon,
     .app-sidebar-block-left-icon
@@ -273,8 +277,10 @@ a
         height $app-sidebar-title-height
         line-height $app-sidebar-title-height
         background: $theme.primary
+        text-align left
 
     .app-sidebar-blocks
+        text-align left
             
         .app-sidebar-block
             padding 10px 0

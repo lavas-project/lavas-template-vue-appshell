@@ -20,30 +20,50 @@ FastClick.attach(document.body);
 
 const {app, router, store} = createApp();
 
-router.onReady(() => {
-    router.beforeResolve((to, from, next) => {
-        const matched = router.getMatchedComponents(to);
-        const prevMatched = router.getMatchedComponents(from);
-
-        let diffed = false;
-        const activated = matched.filter((c, i) => {
-            return diffed || (diffed = (prevMatched[i] !== c));
-        })
-
-        if (!activated.length) {
-            return next();
+// a global mixin that calls `asyncData` when a route component's params change
+Vue.mixin({
+    beforeRouteUpdate (to, from, next) {
+        const {asyncData} = this.$options;
+        if (asyncData) {
+            asyncData({
+                store: this.$store,
+                route: to
+            }).then(next).catch(next);
         }
-
-        loading.start();
-        Promise.all(activated.map(c => {
-            if (c.asyncData) {
-                return c.asyncData({ store, route: to });
-            }
-        })).then(() => {
-            loading.finish();
+        else {
             next();
-        }).catch(next);
-    });
+        }
+    }
+});
 
+// after async components have been resolved
+router.beforeResolve((to, from, next) => {
+    const matched = router.getMatchedComponents(to);
+    const prevMatched = router.getMatchedComponents(from);
+
+    let diffed = false;
+    const activated = matched.filter((c, i) => {
+        return diffed || (diffed = (prevMatched[i] !== c));
+    })
+
+    if (!activated.length) {
+        return next();
+    }
+
+    loading.start();
+    Promise.all(activated.map(c => {
+        if (c.asyncData && (!c.asyncDataFetched || to.meta.notKeepAlive)) {
+            return c.asyncData({ store, route: to })
+                .then(() => {
+                    c.asyncDataFetched = true;
+                });
+        }
+    })).then(() => {
+        loading.finish();
+        next();
+    }).catch(next);
+});
+
+router.onReady(() => {
     app.$mount('#app');
 });
