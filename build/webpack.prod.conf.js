@@ -126,7 +126,9 @@ var webpackConfig = merge(baseWebpackConfig, {
 
         // service worker caching
         new SWPrecacheWebpackPlugin(config.swPrecache.build),
-        new SwRegisterWebpackPlugin({}),
+        new SwRegisterWebpackPlugin({
+            filePath: path.resolve(__dirname, '../src/sw-resgister.js')
+        }),
         new MultiPathWebpackPlugin({})
     ]
 });
