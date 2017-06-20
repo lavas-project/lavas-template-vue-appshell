@@ -5,6 +5,7 @@
 
 /* eslint-disable no-console */
 
+var path = require('path');
 var utils = require('./utils');
 var webpack = require('webpack');
 var config = require('../config');
@@ -15,6 +16,10 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 
+function resolve(dir) {
+    return path.join(__dirname, '..', dir);
+}
+
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
     baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name]);
@@ -23,6 +28,10 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 module.exports = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap})
+            .concat(SkeletonWebpackPlugin.loader({
+                entry: 'skeleton',
+                routerEntry: resolve('src/router.js')
+            }))
     },
 
     // cheap-module-eval-source-map is faster for development
@@ -50,7 +59,7 @@ module.exports = merge(baseWebpackConfig, {
             template: 'index.html',
             inject: true,
             favicon: utils.assetsPath('img/icons/favicon.ico'),
-            // exclude skeleton and sw-register chunk
+            // exclude skeleton chunk
             excludeChunks: ['skeleton']
         }),
 

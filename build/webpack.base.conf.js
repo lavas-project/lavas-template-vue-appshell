@@ -96,8 +96,7 @@ module.exports = {
                 }
             }
         ]
-    }
-    ,
+    },
     resolveLoader: {
         alias: {
             'svg-loader': path.join(__dirname, './loaders/svg-loader'),
