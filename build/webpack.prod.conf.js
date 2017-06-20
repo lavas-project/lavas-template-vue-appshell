@@ -19,6 +19,7 @@ var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 var SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 var SwRegisterWebpackPlugin = require('sw-register-webpack-plugin');
 var MultiPathWebpackPlugin = require('multi-path-webpack-plugin');
+var WebpackCdnPlugin = require('webpack-cdn-plugin');
 
 var env = process.env.NODE_ENV === 'testing'
     ? require('../config/test.env')
@@ -91,6 +92,17 @@ var webpackConfig = merge(baseWebpackConfig, {
             excludeChunks: ['skeleton'],
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
+        }),
+
+        // https://github.com/van-nguyen/webpack-cdn-plugin
+        new WebpackCdnPlugin({
+            modules: [
+                {
+                    name: 'vue',
+                    var: 'Vue',
+                    path: 'dist/vue.runtime.min.js'
+                }
+            ]
         }),
 
         // split vendor js into its own file
