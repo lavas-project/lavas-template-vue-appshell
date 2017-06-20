@@ -1,6 +1,6 @@
-# lavas-template-basic
+# *__name__*
 
-> A Vue.js project
+> *__desc__*
 
 ## Build Setup
 
