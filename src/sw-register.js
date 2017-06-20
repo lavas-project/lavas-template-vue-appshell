@@ -28,7 +28,7 @@ if ('serviceWorker' in navigator) {
         /* eslint-disable max-len */
         dom.innerHTML = `
             <style>
-                .app-refresh {background:#000;color:#fff;height:52px;line-height:52px;opacity:1;position:fixed;left:0;right:0;z-index:10001;padding:0 18px;animation: app-refresh-animation 1s;}
+                .app-refresh {background:#000;color:#fff;height:52px;line-height:52px;opacity:1;position:fixed;top:0;left:0;right:0;z-index:10001;padding:0 18px;animation: app-refresh-animation 1s;}
                 .app-refresh-wrap{display:flex;}
                 .app-refresh-wrap span{display:inline-block;flex:1;font-size:15px;}
                 .app-refresh-wrap button{color:#fff;outline:none;font-size:15px;}
