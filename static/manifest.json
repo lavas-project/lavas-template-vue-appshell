@@ -1,6 +1,6 @@
 {
-  "name": "BPWA SPA",
-  "short_name": "BPWA SPA",
+  "name": "*__name__*",
+  "short_name": "*__name__*",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
