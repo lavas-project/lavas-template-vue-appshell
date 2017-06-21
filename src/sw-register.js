@@ -49,7 +49,7 @@ if ('serviceWorker' in navigator) {
         document.body.appendChild(dom);
     };
 
-
+    // 注册的地址为 sw-precache-webpack-pulgin 生成的 service-worker.js 自己手动维护的 sw.js
     navigator.serviceWorker.register('/service-worker.js');
 
     navigator.serviceWorker.addEventListener('message', e => {
