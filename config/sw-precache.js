@@ -83,7 +83,7 @@ module.exports = {
          *
          * @type {string}
          */
-        templateFilePath: 'build/sw.tmpl',
+        templateFilePath: 'config/sw.tmpl.js',
 
 
         /**
@@ -102,6 +102,7 @@ module.exports = {
         runtimeCaching: [
             {
                 urlPattern: /\/material-design-icon/,
+                // 五种：caheOnly cacheFirst fastest networkFirst networkOnly
                 handler: 'networkFirst'
             }
             // ,
