@@ -27,26 +27,26 @@ if ('serviceWorker' in navigator) {
 
         /* eslint-disable max-len */
         dom.innerHTML = `
-            <div class="app-refresh" id="app-refresh" style="background:#000;color:#fff;height:0;line-height:0;opacity:0;position:fixed;left:0;right:0;z-index:10001;padding:0 18px;transition all:.2s ease-in;">
-                <div class="app-refresh-wrap" style="display:flex;">
-                    <span style="display:inline-block;flex:1;font-size:15px;">已更新最新版本</span>
-                    <button style="color:#fff;outline:none;font-size:15px;" onclick="location.reload()">点击刷新</button>
+            <style>
+                .app-refresh {background:#000;color:#fff;height:52px;line-height:52px;opacity:1;position:fixed;top:0;left:0;right:0;z-index:10001;padding:0 18px;animation: app-refresh-animation 1s;}
+                .app-refresh-wrap{display:flex;}
+                .app-refresh-wrap span{display:inline-block;flex:1;font-size:15px;}
+                .app-refresh-wrap button{color:#fff;outline:none;font-size:15px;}
+                @keyframes app-refresh-animation{from {height: 0;opacity: 0}to {height: 52px;opacity: 1;}}
+                @-webkit-keyframes app-refresh-animation{from {height: 0;opacity: 0}to {height: 52px;opacity: 1;}}
+                @-o-keyframes app-refresh-animation{from {height: 0;opacity: 0}to {height: 52px;opacity: 1;}}
+                @-moz-keyframes app-refresh-animation{from {height: 0;opacity: 0}to {height: 52px;opacity: 1;}}
+            </style>
+            <div class="app-refresh" id="app-refresh">
+                <div class="app-refresh-wrap">
+                    <span>已更新最新版本</span>
+                    <button onclick="location.reload()">点击刷新</button>
                 </div>
             </div>
         `;
         /* eslint-enable */
 
         document.body.appendChild(dom);
-        setTimeout(() => {
-
-            /* eslint-disable fecs-valid-dom-style */
-            const refreshDom = document.getElementById('app-refresh');
-            refreshDom.style.height = 52 + 'px';
-            refreshDom.style.lineHeigit = 52 + 'px';
-            refreshDom.style.opacity = 1;
-            /* eslint-enable */
-
-        }, 16);
     };
 
 

@@ -104,6 +104,7 @@ const ALWAYS_FORWARD_PAGE = ['search'];
  * 历史记录，记录访问过的页面的 fullPath
  *
  * @type {Array.<string>}
+ * @const
  */
 const HISTORY_STACK = [];
 

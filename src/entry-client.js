@@ -7,7 +7,7 @@ import Vue from 'vue';
 import 'es6-promise/auto';
 import FastClick from 'fastclick';
 import {createApp} from './app';
-import ProgressBar from '@/components/ProgressBar.vue'
+import ProgressBar from '@/components/ProgressBar.vue';
 
 import 'normalize.css';
 import '@/assets/styles/global.styl';
@@ -47,8 +47,9 @@ router.beforeResolve((to, from, next) => {
 
     let diffed = false;
     const activated = matched.filter((c, i) => {
-        return diffed || (diffed = (prevMatched[i] !== c));
-    })
+        const ret = diffed || (diffed = (prevMatched[i] !== c));
+        return ret;
+    });
 
     if (!activated.length) {
         return next();
