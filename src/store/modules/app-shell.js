@@ -206,34 +206,6 @@ export default {
                                 route: '/detail/3'
                             }
                         ]
-                    },
-                    {
-                        // 子列表2
-                        sublistTitle: 'Sublist2',
-                        list: [
-                            {
-                                text: 'Detail Page 1',
-                                svg: '',
-                                icon: 'sentiment_satisfied',
-                                image: '',
-                                route: '/detail/1'
-                            },
-                            {
-                                text: 'Detail Page 2',
-                                svg: '',
-                                icon: '',
-                                image: 'https://github.com/google/material-design-icons/blob/master/social/2x_web/ic_mood_bad_black_48dp.png?raw=true',
-                                alt: 'mood-bad',
-                                route: '/detail/2'
-                            },
-                            {
-                                text: 'Detail Page 3',
-                                svg: 'svg-sentiment-very-satisfied',
-                                icon: '',
-                                image: '',
-                                route: '/detail/3'
-                            }
-                        ]
                     }
                 ]
             },

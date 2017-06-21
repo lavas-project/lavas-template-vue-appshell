@@ -5,7 +5,7 @@
                 <p>
                     <v-icon light class="user-avatar-icon">face</v-icon>
                 </p>
-                <p>User Name</p>
+                <p>Lavas</p>
             </div>
             <v-list two-line>
                 <v-list-item v-for="item in items" :key="item.title">
@@ -98,11 +98,11 @@ export default {
     flex-direction column
 
     &-icon
-        width 100px
-        height 100px
-        border-radius 100px
+        width 80px
+        height 80px
+        border-radius 50%
         background #666
-        font-size 80px
+        font-size 70px
 
 .user-item-count
     height 24px
