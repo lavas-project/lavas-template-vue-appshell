@@ -170,6 +170,11 @@ export default {
             transition transform 0.4s cubic-bezier(.55, 0, .1, 1)
             background: $material-theme.bg-color
             color: $material-theme.text-color
+            
+            // 隐藏掉scrollbar
+            &::-webkit-scrollbar
+                width 0px
+                background transparent
 
             &.app-view-with-header
                 top $app-header-height
