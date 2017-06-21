@@ -1,6 +1,5 @@
 <template>
-    <div class="home-wrapper">
-    </div>
+    <div class="home-wrapper"></div>
 </template>
 
 <script>
@@ -10,9 +9,6 @@ import EventBus from '@/event-bus';
 export default {
     name: 'home',
     props: {},
-    data() {
-        return {};
-    },
     methods: {
         ...mapActions('appShell/appHeader', [
             'setAppHeader'
@@ -23,7 +19,7 @@ export default {
     },
     async asyncData() {
         await new Promise((resolve, reject) => {
-            setTimeout(resolve, 1000);
+            setTimeout(resolve, 500);
         });
     },
     activated() {

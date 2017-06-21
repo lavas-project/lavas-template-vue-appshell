@@ -29,7 +29,6 @@
 
 <script>
 import {mapActions} from 'vuex';
-import types from '@/store/mutation-types';
 
 export default {
     name: 'user',

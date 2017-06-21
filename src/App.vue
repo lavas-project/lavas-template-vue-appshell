@@ -17,9 +17,12 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter">
+                    @enter="handleEnter"
+                    @after-enter="handleAfterEnter"
+                    @before-leave="handleBeforeLeave">
                     <keep-alive>
                         <router-view
+                            :key="$route.fullPath"
                             v-if="!$route.meta.notKeepAlive"
                             class="app-view"
                             :class="{
@@ -31,8 +34,11 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter">
+                    @enter="handleEnter"
+                    @after-enter="handleAfterEnter"
+                    @before-leave="handleBeforeLeave">
                     <router-view
+                        :key="$route.fullPath"
                         v-if="$route.meta.notKeepAlive"
                         class="app-view"
                         :class="{
@@ -49,6 +55,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import {mapState, mapActions} from 'vuex';
 import AppHeader from '@/components/AppHeader';
 import AppSidebar from '@/components/AppSidebar';
@@ -61,7 +68,7 @@ export default {
         AppSidebar,
         AppBottomNavigator
     },
-    data () {
+    data() {
         return {};
     },
     computed: {
@@ -82,11 +89,18 @@ export default {
         ...mapActions('appShell/appBottomNavigator', [
             'activateBottomNav'
         ]),
-        handleBeforeEnter() {
+        handleBeforeEnter(el) {
             this.setPageSwitching(true);
         },
-        handleAfterEnter() {
+        handleEnter(el, done) {
+            done();
+        },
+        handleAfterEnter(el) {
+            el.scrollTop = el.dataset.scrollTop;
             this.setPageSwitching(false);
+        },
+        handleBeforeLeave(el) {
+            el.dataset.scrollTop = el.scrollTop;
         },
         handleClickHeaderBack() {
             this.$router.go(-1);
@@ -144,13 +158,7 @@ export default {
         flex 1
         position relative
         overflow hidden
-        .app-view-loading
-            position fixed
-            top 50%
-            left 50%
-            transform translate(-50%, -50%)
-            z-index 100
-            color: $theme.primary
+
         .app-view
             position absolute
             top 0
@@ -162,6 +170,11 @@ export default {
             transition transform 0.4s cubic-bezier(.55, 0, .1, 1)
             background: $material-theme.bg-color
             color: $material-theme.text-color
+            
+            // 隐藏掉scrollbar
+            &::-webkit-scrollbar
+                width 0px
+                background transparent
 
             &.app-view-with-header
                 top $app-header-height

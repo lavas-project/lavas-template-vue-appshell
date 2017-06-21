@@ -23,12 +23,16 @@ const {app, router, store} = createApp();
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
     beforeRouteUpdate(to, from, next) {
-        const asyncData = this.$options.asyncData;
+        const {asyncData} = this.$options;
         if (asyncData) {
-            asyncData({
+            loading.start();
+            asyncData.call(this, {
                 store: this.$store,
                 route: to
-            }).then(next).catch(next);
+            }).then(() => {
+                loading.finish();
+                next();
+            }).catch(next);
         }
         else {
             next();
@@ -54,11 +58,10 @@ router.beforeResolve((to, from, next) => {
     loading.start();
     Promise.all(activated.map(c => {
         if (c.asyncData && (!c.asyncDataFetched || to.meta.notKeepAlive)) {
-            return c.asyncData({
+            return c.asyncData.call(c, {
                 store,
                 route: to
-            })
-            .then(() => {
+            }).then(() => {
                 c.asyncDataFetched = true;
             });
         }

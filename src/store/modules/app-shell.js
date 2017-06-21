@@ -190,20 +190,20 @@ export default {
                         sublistTitle: 'Sublist1',
                         list: [
                             {
-                                text: 'Detail Page One',
+                                text: 'Detail Page 1',
                                 icon: 'sentiment_satisfied',
-                                route: '/detail'
+                                route: '/detail/1'
                             },
                             {
-                                text: 'Detail Page Two',
+                                text: 'Detail Page 2',
                                 image: 'https://github.com/google/material-design-icons/blob/master/social/2x_web/ic_mood_bad_black_48dp.png?raw=true',
                                 alt: 'mood-bad',
-                                route: '/detail'
+                                route: '/detail/2'
                             },
                             {
-                                text: 'Detail Page Three',
+                                text: 'Detail Page 3',
                                 svg: 'svg-sentiment-very-satisfied',
-                                route: '/detail'
+                                route: '/detail/3'
                             }
                         ]
                     },
@@ -212,26 +212,26 @@ export default {
                         sublistTitle: 'Sublist2',
                         list: [
                             {
-                                text: 'Detail Page One',
+                                text: 'Detail Page 1',
                                 svg: '',
                                 icon: 'sentiment_satisfied',
                                 image: '',
-                                route: '/detail'
+                                route: '/detail/1'
                             },
                             {
-                                text: 'Detail Page Two',
+                                text: 'Detail Page 2',
                                 svg: '',
                                 icon: '',
                                 image: 'https://github.com/google/material-design-icons/blob/master/social/2x_web/ic_mood_bad_black_48dp.png?raw=true',
                                 alt: 'mood-bad',
-                                route: '/detail'
+                                route: '/detail/2'
                             },
                             {
-                                text: 'Detail Page Three',
+                                text: 'Detail Page 3',
                                 svg: 'svg-sentiment-very-satisfied',
                                 icon: '',
                                 image: '',
-                                route: '/detail'
+                                route: '/detail/3'
                             }
                         ]
                     }
