@@ -1,5 +1,12 @@
 <template>
-    <div class="home-wrapper"></div>
+    <div class="home-wrapper">
+        <v-parallax height="400" src="">
+            <v-layout column align-center justify-center>
+                <h2 class="gray--text">LAVAS</h2>
+                <h4 class="gray--text">[ˈlɑ:vəz]</h4>
+            </v-layout>
+        </v-parallax>
+    </div>
 </template>
 
 <script>
@@ -42,4 +49,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+h2
+    font-size 46px
+    font-weight 500
+
 </style>
