@@ -16,7 +16,7 @@ function resolve(dir) {
 
 module.exports = {
     entry: {
-        app: './src/entry-client.js',
+        app: ['babel-polyfill', './src/entry-client.js'],
         skeleton: './src/entry-skeleton.js'
     },
     output: {
