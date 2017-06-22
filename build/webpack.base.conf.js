@@ -16,8 +16,7 @@ function resolve(dir) {
 
 module.exports = {
     entry: {
-        app: './src/entry-client.js',
-        skeleton: './src/entry-skeleton.js'
+        app: './src/entry-client.js'
     },
     output: {
         path: config.build.assetsRoot,
