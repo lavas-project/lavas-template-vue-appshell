@@ -23,7 +23,7 @@ const {app, router, store} = createApp();
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
     beforeRouteUpdate(to, from, next) {
-        const {asyncData} = this.$options;
+        const asyncData = this.$options.asyncData;
         if (asyncData) {
             loading.start();
             asyncData.call(this, {
