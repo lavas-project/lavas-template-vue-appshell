@@ -1,12 +1,8 @@
 <template>
-    <div class="home-wrapper">
-        <v-parallax height="400" src="">
-            <v-layout column align-center justify-center>
-                <h2 class="gray--text">LAVAS</h2>
-                <h4 class="gray--text">[ˈlɑ:vəz]</h4>
-            </v-layout>
-        </v-parallax>
-    </div>
+    <v-layout column align-center justify-center>
+        <h2 class="gray--text">LAVAS</h2>
+        <h4 class="gray--text">[ˈlɑ:vəz]</h4>
+    </v-layout>
 </template>
 
 <script>

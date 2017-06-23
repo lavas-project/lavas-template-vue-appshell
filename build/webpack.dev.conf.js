@@ -58,9 +58,7 @@ module.exports = merge(baseWebpackConfig, {
             filename: 'index.html',
             template: 'index.html',
             inject: true,
-            favicon: utils.assetsPath('img/icons/favicon.ico'),
-            // exclude skeleton chunk
-            excludeChunks: ['skeleton']
+            favicon: utils.assetsPath('img/icons/favicon.ico')
         }),
 
         new FriendlyErrorsPlugin()

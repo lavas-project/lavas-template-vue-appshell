@@ -11,9 +11,9 @@ import {createRouter} from './router.js';
 import store from './store';
 import Icon from 'vue-awesome/components/Icon.vue';
 
-Vue.component('icon', Icon);
-
 Vue.use(Vuetify);
+
+Vue.component('icon', Icon);
 
 // 基于hammer.js的手势库
 Vue.use(VueTouch);
