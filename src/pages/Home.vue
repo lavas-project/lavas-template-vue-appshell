@@ -1,5 +1,8 @@
 <template>
-    <div class="home-wrapper"></div>
+    <v-layout column align-center justify-center>
+        <h2 class="gray--text">LAVAS</h2>
+        <h4 class="gray--text">[ˈlɑ:vəz]</h4>
+    </v-layout>
 </template>
 
 <script>
@@ -42,4 +45,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+h2
+    font-size 46px
+    font-weight 500
+
 </style>

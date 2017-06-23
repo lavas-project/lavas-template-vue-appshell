@@ -87,8 +87,6 @@ var webpackConfig = merge(baseWebpackConfig, {
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
             favicon: utils.assetsPath('img/icons/favicon.ico'),
-            // exclude skeleton chunk
-            excludeChunks: ['skeleton'],
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
         }),

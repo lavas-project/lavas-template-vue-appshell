@@ -17,7 +17,6 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @enter="handleEnter"
                     @after-enter="handleAfterEnter"
                     @before-leave="handleBeforeLeave">
                     <keep-alive>
@@ -34,7 +33,6 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @enter="handleEnter"
                     @after-enter="handleAfterEnter"
                     @before-leave="handleBeforeLeave">
                     <router-view
@@ -91,9 +89,6 @@ export default {
         ]),
         handleBeforeEnter(el) {
             this.setPageSwitching(true);
-        },
-        handleEnter(el, done) {
-            done();
         },
         handleAfterEnter(el) {
             el.scrollTop = el.dataset.scrollTop;
