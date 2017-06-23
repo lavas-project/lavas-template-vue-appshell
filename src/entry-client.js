@@ -4,7 +4,7 @@
  */
 
 import Vue from 'vue';
-import 'es6-promise/auto';
+import 'babel-polyfill';
 import FastClick from 'fastclick';
 import {createApp} from './app';
 import ProgressBar from '@/components/ProgressBar.vue';
