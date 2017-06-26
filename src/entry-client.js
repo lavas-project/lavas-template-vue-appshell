@@ -3,8 +3,8 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-import Vue from 'vue';
 import 'babel-polyfill';
+import Vue from 'vue';
 import FastClick from 'fastclick';
 import {createApp} from './app';
 import ProgressBar from '@/components/ProgressBar.vue';
