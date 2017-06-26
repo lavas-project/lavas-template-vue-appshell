@@ -17,7 +17,8 @@ export default {
             'setAppHeader'
         ]),
         ...mapActions('appShell/appBottomNavigator', [
-            'showBottomNav'
+            'showBottomNav',
+            'activateBottomNav'
         ])
     },
     async asyncData() {
@@ -39,6 +40,7 @@ export default {
                 }
             ]
         });
+        this.activateBottomNav('home');
         this.showBottomNav();
     }
 };

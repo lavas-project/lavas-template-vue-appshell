@@ -3,13 +3,14 @@
 
 // vuetify预置了大量颜色变量，可减少30k左右
 $color-pack = false
-// @import '~vuetify/src/stylus/main';
 
 @import '../../../node_modules/vuetify/src/stylus/settings/*'
 @import '../../../node_modules/vuetify/src/stylus/tools/_mixins'
 @import '../../../node_modules/vuetify/src/stylus/generic/*'
 @import '../../../node_modules/vuetify/src/stylus/elements/*'
 @import '../../../node_modules/vuetify/src/stylus/trumps/*'
+
+// 减少生成的css大小，单独引用使用到的vuetify控件样式
 @import '../../../node_modules/vuetify/src/stylus/components/_buttons'
 @import '../../../node_modules/vuetify/src/stylus/components/_icons'
 @import '../../../node_modules/vuetify/src/stylus/components/_ripple'
