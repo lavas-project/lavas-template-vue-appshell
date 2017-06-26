@@ -43,6 +43,8 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), function
             + '  Opening index.html over file:// won\'t work.\n'
         ));
 
-        process.exit();
+        if (!process.env.npm_config_report) {
+            process.exit();
+        }
     });
 });
