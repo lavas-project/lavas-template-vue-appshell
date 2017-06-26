@@ -1,3 +1,4 @@
+/* eslint-disable */
 const loaderUtils = require('loader-utils');
 const STYLE_TAG_REG= /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
 const defaultVuetifyVariables = {
