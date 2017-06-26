@@ -5,12 +5,22 @@
 
 if ('serviceWorker' in navigator) {
 
-    /**
+    // 注册的地址为 sw-precache-webpack-pulgin 生成的 service-worker.js 自己手动维护的 sw.js
+    navigator.serviceWorker.register('/service-worker.js');
+
+    navigator.serviceWorker.addEventListener('message', e => {
+        // received the update message from sw
+        if (e.data === 'updateMessage') {
+            handlerUpdateMessage(e);
+        }
+    });
+
+     /**
      * 处理 service worker 更新
      *
      * @param  {Object} e event source
      */
-    const handlerUpdateMessage = e => {
+    function handlerUpdateMessage(e) {
 
         // 在这里可以检测到 service worker 文件的更新，通常我们建议做页面的 reload
 
@@ -49,13 +59,4 @@ if ('serviceWorker' in navigator) {
         document.body.appendChild(dom);
     };
 
-    // 注册的地址为 sw-precache-webpack-pulgin 生成的 service-worker.js 自己手动维护的 sw.js
-    navigator.serviceWorker.register('/service-worker.js');
-
-    navigator.serviceWorker.addEventListener('message', e => {
-        // received the update message from sw
-        if (e.data === 'updateMessage') {
-            handlerUpdateMessage(e);
-        }
-    });
 }
