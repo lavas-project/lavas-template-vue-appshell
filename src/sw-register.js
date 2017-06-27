@@ -21,10 +21,10 @@ navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js'
             /* eslint-disable max-len */
             dom.innerHTML = `
                 <style>
-                    .app-refresh{background:#000;height:0;line-height:52px;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:10001;padding:0 18px;transition: all 0.3s ease;-webkit-transition:all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;}
+                    .app-refresh{background:#000;height:0;line-height:52px;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:10001;padding:0 18px;transition:all .3s ease;-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-o-transition:all .3s ease;}
                     .app-refresh-wrap{display:flex;color:#fff;font-size:15px;}
                     .app-refresh-wrap label{flex:1;}
-                    .app-refresh-show{height: 52px;}
+                    .app-refresh-show{height:52px;}
                 </style>
                 <div class="app-refresh" id="app-refresh">
                     <div class="app-refresh-wrap" onclick="location.reload()">
