@@ -1,8 +1,8 @@
 <template>
-    <v-layout column align-center justify-center>
+    <div>
         <h2 class="gray--text">LAVAS</h2>
         <h4 class="gray--text">[ˈlɑ:vəz]</h4>
-    </v-layout>
+    </div>
 </template>
 
 <script>

@@ -92,11 +92,7 @@ export default {
             this.setPageSwitching(true);
         },
         handleAfterEnter(el) {
-            el.scrollTop = el.dataset.scrollTop;
             this.setPageSwitching(false);
-        },
-        handleBeforeLeave(el) {
-            el.dataset.scrollTop = el.scrollTop;
         },
         handleClickHeaderBack() {
             this.$router.go(-1);

@@ -36,6 +36,17 @@ Vue.mixin({
         else {
             next();
         }
+    },
+    // 路由切换时，保存页面滚动位置
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            // 通过 `vm` 访问组件实例
+            vm.$el.scrollTop = vm.$store.state.appShell.lastPage[to.fullPath] || 0;
+        });
+    },
+    beforeRouteLeave (to, from, next) {
+        this.$store.dispatch('appShell/saveScrollTop', {path: from.fullPath, scrollTop: this.$el.scrollTop});
+        next();
     }
 });
 
