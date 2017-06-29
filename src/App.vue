@@ -17,8 +17,7 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter"
-                    @before-leave="handleBeforeLeave">
+                    @after-enter="handleAfterEnter">
                     <keep-alive>
                         <router-view
                             :key="$route.fullPath"
@@ -33,8 +32,7 @@
                 <transition
                     :name="pageTransitionName"
                     @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter"
-                    @before-leave="handleBeforeLeave">
+                    @after-enter="handleAfterEnter">
                     <router-view
                         :key="$route.fullPath"
                         v-if="$route.meta.notKeepAlive"
@@ -92,11 +90,7 @@ export default {
             this.setPageSwitching(true);
         },
         handleAfterEnter(el) {
-            el.scrollTop = el.dataset.scrollTop;
             this.setPageSwitching(false);
-        },
-        handleBeforeLeave(el) {
-            el.dataset.scrollTop = el.scrollTop;
         },
         handleClickHeaderBack() {
             this.$router.go(-1);
