@@ -43,7 +43,7 @@ module.exports = {
             // inject vuetify theme variables
             {
                 resource: resolve('src/assets/styles/global'),
-                loader: 'theme-loader!import-glob',
+                loader: 'theme-loader',
                 enforce: 'pre'
             },
             {
