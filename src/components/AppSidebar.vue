@@ -6,7 +6,7 @@
             @close-mask="close"
         ></app-mask>
 
-        <v-touch 
+        <v-touch
             @panmove="handlePanMove"
             @panend="handlePanEnd"
             :enabled="{ pan: true, tap: false }"
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapState} from 'vuex';
 import AppMask from './AppMask.vue';
 
 // hammer.js 方向常量
@@ -104,25 +104,29 @@ export default {
             };
         },
         inlineStyle() {
+
             // 拖拽时取消transition
             let transition = this.isDragging ? 'none' : 'transform .5s ease';
+
             // 隐藏状态时的位置
             let initTranslateX = this.widthInPx + BOX_SHADOW_WIDTH;
             if (this.slideFrom === 'left') {
                 initTranslateX = -initTranslateX;
             }
+
             // 当前水平方向平移距离
-            let currentTranslateX = (this.isDragging ?
-                this.translateX : (this.show ? 0 : initTranslateX));
+            let currentTranslateX = this.isDragging
+                ? this.translateX
+                : (this.show ? 0 : initTranslateX);
             let styleObj = {
-                width: `${this.widthInPx}px`,
-                transition: transition,
+                'width': `${this.widthInPx}px`,
+                'transition': transition,
                 '-webkit-transition': transition,
-                transform: `translate3d(${currentTranslateX}px, 0, 0)`,
-                '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`
-            }
-            // 展示状态绝对定位靠左/右
-            styleObj[this.slideFrom] = 0;
+                'transform': `translate3d(${currentTranslateX}px, 0, 0)`,
+                '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`,
+                [this.slideFrom]: 0 // 展示状态绝对定位靠左/右
+            };
+
             return styleObj;
         },
         closeDirection() {
@@ -160,7 +164,7 @@ export default {
             this.translateX = 0;
         },
         handlePanMove(event) {
-            let {deltaX} = event;
+            let deltaX = event.deltaX;
             let translateX = deltaX + (this.slideFrom === 'left' ? -this.widthInPx : this.widthInPx);
             this.isDragging = true;
             if (this.widthInPx < Math.abs(deltaX)) { // 滑动超过了sidebar宽度
@@ -203,7 +207,7 @@ a
 
 .app-sidebar-wrapper
     z-index 9999
-    
+
     .app-sidebar-swipe
         position fixed
         top 0
@@ -224,10 +228,10 @@ a
     box-shadow 3px 0 8px 1px rgba(0, 0, 0, 0.4)
     overflow-y auto
     z-index 9999
-    
+
     &.app-sidebar-content-right
         box-shadow -3px 0 8px 1px rgba(0, 0, 0, 0.4)
-        
+
         &.app-sidebar-title,
         &.app-sidebar-blocks
             text-align right
@@ -281,7 +285,7 @@ a
 
     .app-sidebar-blocks
         text-align left
-            
+
         .app-sidebar-block
             padding 10px 0
             border-bottom 1px solid #e0e0e0

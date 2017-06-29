@@ -83,7 +83,7 @@ module.exports = {
          *
          * @type {string}
          */
-        templateFilePath: 'config/sw.tmpl.js',
+        templateFilePath: 'config/sw.js.tmpl',
 
 
         /**

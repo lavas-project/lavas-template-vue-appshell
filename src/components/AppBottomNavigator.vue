@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapState} from 'vuex';
 import EventBus from '@/event-bus';
 
 export default {
@@ -45,10 +45,12 @@ export default {
          */
         handleNavClick(route, name) {
             let eventData = {name};
+
             // 发送给父组件，内部处理
-            this.$emit(`click-nav`, eventData);
+            this.$emit('click-nav', eventData);
+
             // 发送全局事件，便于非父子关系的路由组件监听
-            EventBus.$emit(`app-bottom-navigator:click-nav`, eventData);
+            EventBus.$emit('app-bottom-navigator:click-nav', eventData);
             if (route) {
                 this.$router.replace(route);
             }

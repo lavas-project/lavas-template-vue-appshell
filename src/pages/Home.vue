@@ -7,7 +7,6 @@
 
 <script>
 import {mapActions} from 'vuex';
-import EventBus from '@/event-bus';
 
 export default {
     name: 'home',
