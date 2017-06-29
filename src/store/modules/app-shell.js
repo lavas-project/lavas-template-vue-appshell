@@ -27,8 +27,14 @@ const state = {
      *
      * @type {string}
      */
-    pageTransitionName: ''
+    pageTransitionName: '',
 
+    /**
+     * 上个页面 scroll 的信息
+     *
+     * @type {Object}
+     */
+    lastPage: {}
 };
 
 const actions = {
@@ -59,6 +65,17 @@ const actions = {
      */
     setPageSwitching({commit}, isPageSwitching) {
         commit(types.SET_PAGE_SWITCHING, isPageSwitching);
+    },
+
+    /**
+     * 保存页面 scroll 高度
+     *
+     * @param {[type]} options.commit [description]
+     * @param {string} options.path path
+     * @param {number} options.scrollTop scrollTop
+     */
+    saveScrollTop({commit}, {path, scrollTop}) {
+        commit(types.SAVE_SCROLLTOP, {path, scrollTop});
     }
 };
 
@@ -68,6 +85,9 @@ const mutations = {
     },
     [types.SET_PAGE_TRANSITION_NAME](state, {pageTransitionName}) {
         state.pageTransitionName = pageTransitionName;
+    },
+    [types.SAVE_SCROLLTOP](state, {path, scrollTop}) {
+        state.lastPage[path] = scrollTop;
     }
 };
 
