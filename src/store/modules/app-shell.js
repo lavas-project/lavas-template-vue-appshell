@@ -5,8 +5,7 @@
 
 import * as types from '../mutation-types';
 
-
-const state = {
+let state = {
 
     /**
      * 是否需要页面切换动画
@@ -37,7 +36,7 @@ const state = {
     lastPage: {}
 };
 
-const actions = {
+let actions = {
 
     /**
      * 开启页面切换动画
@@ -79,7 +78,7 @@ const actions = {
     }
 };
 
-const mutations = {
+let mutations = {
     [types.SET_PAGE_SWITCHING](state, isPageSwitching) {
         state.isPageSwitching = isPageSwitching;
     },
@@ -91,8 +90,6 @@ const mutations = {
     }
 };
 
-
-
 export default {
     namespaced: true,
     /* eslint-disable */
@@ -101,6 +98,7 @@ export default {
     state,
     /* eslint-enable */
     modules: {
+
         /**
          * 顶部导航栏的数据
          *
@@ -109,6 +107,7 @@ export default {
         appHeader: {
             namespaced: true,
             state: {
+
                 /**
                  * 是否展示顶部导航栏
                  *
@@ -187,6 +186,7 @@ export default {
             state: {
                 show: false, // 是否显示sidebar
                 slideFrom: 'left', // 划出的方向
+
                 // 头部条的相关配置
                 title: {
                     imageLeft: '',
@@ -199,10 +199,13 @@ export default {
                     svgRight: '',
                     iconRight: ''
                 },
+
                 // 最大宽度，可以是百分比，也可以以px为单位
                 width: 0.75,
+
                 // 滑动距离展示阈值
                 showWidthThreshold: 0.25,
+
                 // 分块组
                 blocks: [
                     {
@@ -264,6 +267,7 @@ export default {
         appBottomNavigator: {
             namespaced: true,
             state: {
+
                 /**
                  * 是否展示底部导航栏
                  *
@@ -280,12 +284,16 @@ export default {
                     {
                         // 按钮的名字
                         name: 'home',
+
                         // 显示的 icon
                         icon: 'home',
+
                         // 显示的文字
                         text: '主页',
+
                         // 是否是当前激活的
                         active: true,
+
                         // 路由
                         route: {
                             name: 'home',
@@ -295,10 +303,13 @@ export default {
                     {
                         // 按钮的名字
                         name: 'user',
+
                         // 显示的 icon
                         icon: 'person',
+
                         // 显示的文字
                         text: '个人中心',
+
                         // 路由信息
                         route: '/user'
                     }

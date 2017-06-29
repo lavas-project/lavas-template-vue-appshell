@@ -11,18 +11,16 @@ import ProgressBar from '@/components/ProgressBar.vue';
 
 import '@/assets/styles/global.styl';
 
-// global progress bar
+// 全局的进度条
 let loading = Vue.prototype.$loading = new Vue(ProgressBar).$mount();
-document.body.appendChild(loading.$el);
-
-FastClick.attach(document.body);
-
 let {app, router, store} = createApp();
+
+document.body.appendChild(loading.$el);
+FastClick.attach(document.body);
 
 // 当 router 的 component 参数发生变化的时候执行
 Vue.mixin({
     beforeRouteUpdate(to, from, next) {
-
         let asyncData = this.$options.asyncData;
 
         if (asyncData) {
@@ -56,7 +54,6 @@ Vue.mixin({
 
 // after async components have been resolved
 router.beforeResolve((to, from, next) => {
-
     let matched = router.getMatchedComponents(to);
     let prevMatched = router.getMatchedComponents(from);
     let diffed = false;
