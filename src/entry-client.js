@@ -12,17 +12,19 @@ import ProgressBar from '@/components/ProgressBar.vue';
 import '@/assets/styles/global.styl';
 
 // global progress bar
-const loading = Vue.prototype.$loading = new Vue(ProgressBar).$mount();
+let loading = Vue.prototype.$loading = new Vue(ProgressBar).$mount();
 document.body.appendChild(loading.$el);
 
 FastClick.attach(document.body);
 
-const {app, router, store} = createApp();
+let {app, router, store} = createApp();
 
-// a global mixin that calls `asyncData` when a route component's params change
+// 当 router 的 component 参数发生变化的时候执行
 Vue.mixin({
     beforeRouteUpdate(to, from, next) {
-        const asyncData = this.$options.asyncData;
+
+        let asyncData = this.$options.asyncData;
+
         if (asyncData) {
             loading.start();
             asyncData.call(this, {
@@ -37,9 +39,11 @@ Vue.mixin({
             next();
         }
     },
+
     // 路由切换时，保存页面滚动位置
     beforeRouteEnter(to, from, next) {
         next(vm => {
+
             // 通过 `vm` 访问组件实例
             vm.$el.scrollTop = vm.$store.state.appShell.lastPage[to.fullPath] || 0;
         });
@@ -52,12 +56,12 @@ Vue.mixin({
 
 // after async components have been resolved
 router.beforeResolve((to, from, next) => {
-    const matched = router.getMatchedComponents(to);
-    const prevMatched = router.getMatchedComponents(from);
 
+    let matched = router.getMatchedComponents(to);
+    let prevMatched = router.getMatchedComponents(from);
     let diffed = false;
-    const activated = matched.filter((c, i) => {
-        const ret = diffed || (diffed = (prevMatched[i] !== c));
+    let activated = matched.filter((c, i) => {
+        let ret = diffed || (diffed = (prevMatched[i] !== c));
         return ret;
     });
 
@@ -81,6 +85,4 @@ router.beforeResolve((to, from, next) => {
     }).catch(next);
 });
 
-router.onReady(() => {
-    app.$mount('#app');
-});
+router.onReady(() => app.$mount('#app'));
