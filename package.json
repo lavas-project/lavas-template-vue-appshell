@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "lint": "fecs build config src src/**/*.vue --rule",
+    "lint": "fecs --rule --type 'vue,js,css'",
     "start": "node build/dev-server.js",
     "build": "npm run lint & node build/build.js"
   },

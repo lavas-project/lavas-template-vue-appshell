@@ -1,4 +1,5 @@
 node_modules
 dist
-config/sw.tmpl.js
-*.html
+static
+build
+*.index.html
