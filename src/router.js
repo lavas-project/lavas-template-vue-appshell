@@ -19,6 +19,8 @@ Vue.use(Router);
 export function createRouter() {
 
     const router = new Router({
+
+        // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
         mode: 'history',
         routes: [
             {
