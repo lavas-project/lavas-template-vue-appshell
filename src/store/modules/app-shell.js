@@ -69,8 +69,10 @@ const actions = {
 
     /**
      * 保存页面 scroll 高度
-     * @param  {[type]} options.commit [description]
-     * @param {Number} scrollTop scrollTop
+     *
+     * @param {[type]} options.commit [description]
+     * @param {string} options.path path
+     * @param {number} options.scrollTop scrollTop
      */
     saveScrollTop({commit}, {path, scrollTop}) {
         commit(types.SAVE_SCROLLTOP, {path, scrollTop});
