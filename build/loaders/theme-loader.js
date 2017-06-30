@@ -9,7 +9,7 @@ const loaderUtils = require('loader-utils');
 
 const STYLE_TAG_REG = /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
 
-const defaultVuetifyVariables = {
+let defaultVuetifyVariables = {
     themeColor: {
         primary: '$blue.darken-2',
         accent: '$blue.accent-2',
@@ -32,7 +32,7 @@ const defaultVuetifyVariables = {
     }
 };
 
-const themeColor = Object.assign(
+let themeColor = Object.assign(
     {},
     defaultVuetifyVariables.themeColor,
     theme.theme.themeColor
@@ -50,7 +50,7 @@ let themeColorTemplate = `
     }
 `;
 
-const materialDesign = Object.assign(
+let materialDesign = Object.assign(
     {},
     defaultVuetifyVariables.materialDesign,
     theme.theme.materialDesign
@@ -72,15 +72,15 @@ let materialDesignTemplate = `
 `;
 
 // import global variables
-const importVariablesTemplate = '@import \'~@/assets/styles/variables\';';
+let importVariablesTemplate = '@import \'~@/assets/styles/variables\';';
 
 // add to global variables
-const injectedTemplate = importVariablesTemplate
+let injectedTemplate = importVariablesTemplate
     + themeColorTemplate + materialDesignTemplate;
 
 module.exports = function (source) {
     this.cacheable();
-    const options = loaderUtils.getOptions(this);
+    let options = loaderUtils.getOptions(this);
     if (options && options.injectInVueFile) {
         // inject variables into <style> tag in every '.vue' file
         return source.replace(STYLE_TAG_REG, '$1' + injectedTemplate + '$2$3');
