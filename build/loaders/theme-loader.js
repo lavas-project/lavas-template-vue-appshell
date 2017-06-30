@@ -4,10 +4,10 @@
  */
 
 // extract vuetify theme variables
-const {theme} = require('../../config');
+const theme = require('../../config/theme');
 const loaderUtils = require('loader-utils');
 
-const STYLE_TAG_REG= /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
+const STYLE_TAG_REG = /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
 
 const defaultVuetifyVariables = {
     themeColor: {
@@ -72,21 +72,18 @@ let materialDesignTemplate = `
 `;
 
 // import global variables
-const importVariablesTemplate = `@import '~@/assets/styles/variables';`;
+const importVariablesTemplate = '@import \'~@/assets/styles/variables\';';
 
 // add to global variables
-const injectedTemplate = `
-    ${importVariablesTemplate}
-    ${themeColorTemplate}
-    ${materialDesignTemplate}
-`;
+const injectedTemplate = importVariablesTemplate
+    + themeColorTemplate + materialDesignTemplate;
 
 module.exports = function (source) {
     this.cacheable();
     const options = loaderUtils.getOptions(this);
     if (options && options.injectInVueFile) {
         // inject variables into <style> tag in every '.vue' file
-        return source.replace(STYLE_TAG_REG, `$1${injectedTemplate}$2$3`);
+        return source.replace(STYLE_TAG_REG, '$1' + injectedTemplate + '$2$3');
     }
-    return `${injectedTemplate}${source}`;
-}
+    return injectedTemplate + source;
+};

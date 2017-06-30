@@ -177,8 +177,16 @@ export default {
         handlePanEnd(event) {
             let {direction, deltaX} = event;
             this.isDragging = false;
-            // 停止时滑动距离超过阈值，认为需要展示
-            Math.abs(deltaX) > this.showWidthThresholdInPx ? this.open() : this.close();
+
+            if (direction === this.closeDirection) {
+                this.close();
+            }
+            else if (Math.abs(deltaX) > this.showWidthThresholdInPx) { // 停止时滑动距离超过阈值，认为需要展示
+                this.open();
+            }
+            else {
+                this.close();
+            }
         }
     },
     created() {

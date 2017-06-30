@@ -8,17 +8,16 @@ import Router from 'vue-router';
 import * as types from './store/mutation-types';
 
 // 定义切割点，异步加载路由组件
-const Home = () => import('@/pages/Home.vue');
-const Detail = () => import('@/pages/Detail.vue');
-const NotFound = () => import('@/pages/NotFound.vue');
-const User = () => import('@/pages/User.vue');
-const Search = () => import('@/pages/Search.vue');
+let Home = () => import('@/pages/Home.vue');
+let Detail = () => import('@/pages/Detail.vue');
+let NotFound = () => import('@/pages/NotFound.vue');
+let User = () => import('@/pages/User.vue');
+let Search = () => import('@/pages/Search.vue');
 
 Vue.use(Router);
 
 export function createRouter() {
-
-    const router = new Router({
+    let router = new Router({
 
         // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
         mode: 'history',
@@ -72,8 +71,10 @@ export function createRouter() {
 
     router.beforeEach((to, from, next) => {
         if (router.app.$store) {
+
             // 如果不需要切换动画，直接返回
             if (router.app.$store.state.appShell.needPageTransition) {
+
                 // 判断当前是前进还是后退，添加不同的动画效果
                 let pageTransitionName = isForward(to, from) ? SLIDE_LEFT : SLIDE_RIGHT;
                 router.app.$store.commit(`appShell/${types.SET_PAGE_TRANSITION_NAME}`, {pageTransitionName});
@@ -83,7 +84,6 @@ export function createRouter() {
     });
 
     return router;
-
 }
 
 /**
