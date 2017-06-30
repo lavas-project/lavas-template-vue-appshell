@@ -76,6 +76,7 @@ export default {
                 }
             ]
         });
+
         // 设置当前 bottom navigator 显示的 item
         this.activateBottomNav('user');
         this.showBottomNav();
