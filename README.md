@@ -14,6 +14,9 @@ npm update
 # 在 localhost:8082 上启动带有热更新机制的开发服务器
 npm run dev
 
+# 检查您的代码是否规范
+npm run lint
+
 # 构建线上生产环境产物
 npm run build
 

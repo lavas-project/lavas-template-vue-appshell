@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "lint": "./node_modules/fecs/bin/fecs --rule --type 'vue,js,css'",
+    "lint": "./node_modules/fecs/bin/fecs --ignore=./.fecsignore --rule --type 'vue,js,css'",
     "start": "node build/dev-server.js",
     "build": "npm run lint & node build/build.js"
   },
