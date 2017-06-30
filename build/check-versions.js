@@ -33,7 +33,7 @@ if (shell.which('npm')) {
 
 module.exports = function () {
     let warnings = [];
-    for (let i = 0; i < versionRequirements.length; i++) {
+    for (let i = 0, len; i < len; i++) {
         let mod = versionRequirements[i];
         if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
             warnings.push(mod.name + ': '
@@ -52,6 +52,7 @@ module.exports = function () {
             console.log('  ' + warning);
         });
 
+        console.log();
         process.exit(1);
     }
 };

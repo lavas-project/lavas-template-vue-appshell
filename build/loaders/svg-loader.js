@@ -10,7 +10,7 @@ const {svgDir, icons, prefix} = require('../../config/icon');
 module.exports = source => {
     // 从vue-awesome中导入
     if (icons) {
-        icons.forEach(iconName => source += `import 'vue-awesome/icons/${iconName}';`);
+        icons.reduce(iconName => source += `import 'vue-awesome/icons/${iconName}';`);
     }
 
     // 从svg文件夹中取
