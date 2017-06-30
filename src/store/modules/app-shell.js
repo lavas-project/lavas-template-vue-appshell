@@ -33,7 +33,7 @@ let state = {
      *
      * @type {Object}
      */
-    lastPage: {}
+    historyPageScrollTop: {}
 };
 
 let actions = {
@@ -86,7 +86,7 @@ let mutations = {
         state.pageTransitionName = pageTransitionName;
     },
     [types.SAVE_SCROLLTOP](state, {path, scrollTop}) {
-        state.lastPage[path] = scrollTop;
+        state.historyPageScrollTop[path] = scrollTop;
     }
 };
 

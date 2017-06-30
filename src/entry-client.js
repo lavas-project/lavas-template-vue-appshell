@@ -43,7 +43,7 @@ Vue.mixin({
         next(vm => {
 
             // 通过 `vm` 访问组件实例
-            vm.$el.scrollTop = vm.$store.state.appShell.lastPage[to.fullPath] || 0;
+            vm.$el.scrollTop = vm.$store.state.appShell.historyPageScrollTop[to.fullPath] || 0;
         });
     },
     beforeRouteLeave(to, from, next) {
