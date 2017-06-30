@@ -1,6 +1,14 @@
-/* eslint-disable */
+/**
+ * @file theme loader
+ * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
+ */
+
+// extract vuetify theme variables
+const {theme} = require('../../config');
 const loaderUtils = require('loader-utils');
+
 const STYLE_TAG_REG= /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
+
 const defaultVuetifyVariables = {
     themeColor: {
         primary: '$blue.darken-2',
@@ -23,10 +31,13 @@ const defaultVuetifyVariables = {
         'inactive-icon-percent': .38
     }
 };
-// extract vuetify theme variables
-const {theme} = require('../../config');
-const themeColor = Object.assign({},
-    defaultVuetifyVariables.themeColor, theme.theme.themeColor);
+
+const themeColor = Object.assign(
+    {},
+    defaultVuetifyVariables.themeColor,
+    theme.theme.themeColor
+);
+
 let themeColorTemplate = `
     $theme := {
         primary: ${themeColor.primary}
@@ -39,8 +50,12 @@ let themeColorTemplate = `
     }
 `;
 
-const materialDesign = Object.assign({},
-    defaultVuetifyVariables.materialDesign, theme.theme.materialDesign);
+const materialDesign = Object.assign(
+    {},
+    defaultVuetifyVariables.materialDesign,
+    theme.theme.materialDesign
+);
+
 let materialDesignTemplate = `
     $material-custom := {
         bg-color: ${materialDesign['bg-color']}
@@ -58,6 +73,7 @@ let materialDesignTemplate = `
 
 // import global variables
 const importVariablesTemplate = `@import '~@/assets/styles/variables';`;
+
 // add to global variables
 const injectedTemplate = `
     ${importVariablesTemplate}

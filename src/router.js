@@ -118,34 +118,33 @@ const HISTORY_STACK = [];
  * @return {boolean} 是否表示返回
  */
 function isForward(to, from) {
-    let res = true;
-
     // to 如果在这个列表中，始终认为是后退
     if (to.name && ALWAYS_BACK_PAGE.indexOf(to.name) !== -1) {
         // 清空历史
         HISTORY_STACK.length = 0;
-        res = false;
-    }
-    else if (from.name && ALWAYS_BACK_PAGE.indexOf(from.name) !== -1) {
-        // 如果是从 ALWAYS_BACK_PAGE 过来的，那么永远都是前进
-        HISTORY_STACK.push(to.fullPath);
-    }
-    else if (to.name && ALWAYS_FORWARD_PAGE.indexOf(to.name) !== -1) {
-        // to 如果在这个列表中，始终认为是前进
-        HISTORY_STACK.push(to.fullPath);
-    }
-    else {
-        // 根据 fullPath 判断当前页面是否访问过，如果访问过，则属于返回
-        let index = HISTORY_STACK.indexOf(to.fullPath);
-        if (index !== -1) {
-            HISTORY_STACK.length = index + 1;
-            res = false;
-        }
-        else {
-            // 将 to.fullPath 加到栈顶
-            HISTORY_STACK.push(to.fullPath);
-        }
+        return false;
     }
 
-    return res;
+    if (from.name && ALWAYS_BACK_PAGE.indexOf(from.name) !== -1) {
+        // 如果是从 ALWAYS_BACK_PAGE 过来的，那么永远都是前进
+        HISTORY_STACK.push(to.fullPath);
+        return true;
+    }
+
+    if (to.name && ALWAYS_FORWARD_PAGE.indexOf(to.name) !== -1) {
+        // to 如果在这个列表中，始终认为是前进
+        HISTORY_STACK.push(to.fullPath);
+        return true;
+    }
+
+    // 根据 fullPath 判断当前页面是否访问过，如果访问过，则属于返回
+    let index = HISTORY_STACK.indexOf(to.fullPath);
+    if (index !== -1) {
+        HISTORY_STACK.length = index + 1;
+        return false;
+    }
+
+    // 将 to.fullPath 加到栈顶
+    HISTORY_STACK.push(to.fullPath);
+    return true;
 }

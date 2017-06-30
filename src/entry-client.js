@@ -55,11 +55,11 @@ router.beforeResolve((to, from, next) => {
     const matched = router.getMatchedComponents(to);
     const prevMatched = router.getMatchedComponents(from);
 
+    // [a, b]
+    // [a, b, c, d]
+    // => [c, d]
     let diffed = false;
-    const activated = matched.filter((c, i) => {
-        const ret = diffed || (diffed = (prevMatched[i] !== c));
-        return ret;
-    });
+    const activated = matched.filter((c, i) => diffed || (diffed = (prevMatched[i] !== c)));
 
     if (!activated.length) {
         return next();
@@ -68,7 +68,7 @@ router.beforeResolve((to, from, next) => {
     loading.start();
     Promise.all(activated.map(c => {
         if (c.asyncData && (!c.asyncDataFetched || to.meta.notKeepAlive)) {
-            return c.asyncData.call(c, {
+            return c.asyncData({
                 store,
                 route: to
             }).then(() => {
