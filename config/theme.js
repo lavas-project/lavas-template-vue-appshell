@@ -3,6 +3,7 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
+'use strict';
 
 // 定义主题列表
 let themeList = {
@@ -10,7 +11,6 @@ let themeList = {
     myTheme: {
         themeColor: {
             primary: 'rgb(40, 116, 240)',
-            // primary: '#4DBA87',
             accent: '$blue.accent-2',
             secondary: '$grey.darken-3',
             info: '$blue.base',
@@ -33,9 +33,5 @@ let themeList = {
 };
 
 module.exports = {
-    manifest: {
-        // backgroundColor: '#000000',
-        // themeColor: '#4DBA87'
-    },
     theme: themeList.myTheme // 和主题列表中的主题名称对应
 };

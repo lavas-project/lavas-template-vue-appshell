@@ -135,9 +135,7 @@ export default {
     },
     methods: {
         caclWidth() {
-            if (typeof document !== 'undefined') {
-                this.clientWidth = document.body.clientWidth;
-            }
+            this.clientWidth = document.body.clientWidth;
 
             if (this.width > 1) {
                 this.widthInPx = this.width;
@@ -190,7 +188,9 @@ export default {
         }
     },
     created() {
-        this.caclWidth();
+        if (!this.$isServer) {
+            this.caclWidth();
+        }
     }
 };
 </script>
