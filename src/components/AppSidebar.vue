@@ -135,15 +135,17 @@ export default {
     },
     methods: {
         caclWidth() {
-            if (document) {
+            if (typeof document !== 'undefined') {
                 this.clientWidth = document.body.clientWidth;
             }
+
             if (this.width > 1) {
                 this.widthInPx = this.width;
             }
             else {
                 this.widthInPx = Math.round(this.clientWidth * this.width);
             }
+
             if (this.showWidthThreshold > 1) {
                 this.showWidthThresholdInPx = this.showWidthThreshold;
             }
@@ -175,6 +177,7 @@ export default {
         handlePanEnd(event) {
             let {direction, deltaX} = event;
             this.isDragging = false;
+
             if (direction === this.closeDirection) {
                 this.close();
             }

@@ -3,7 +3,7 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-var path = require('path');
+const path = require('path');
 
 module.exports = {
     // 前缀

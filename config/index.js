@@ -4,10 +4,10 @@
  */
 
 // see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path');
-var swPrecacheConfig = require('./sw-precache');
-var theme = require('./theme');
-var icon = require('./icon');
+const path = require('path');
+const swPrecacheConfig = require('./sw-precache');
+const theme = require('./theme');
+const icon = require('./icon');
 
 module.exports = {
     icon: icon,

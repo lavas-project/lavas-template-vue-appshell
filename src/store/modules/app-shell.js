@@ -348,12 +348,7 @@ export default {
             mutations: {
                 [types.ACTIVATE_APP_BOTTOM_NAV](state, name) {
                     state.navs = state.navs.map(nav => {
-                        if (nav.name === name) {
-                            nav.active = true;
-                        }
-                        else {
-                            nav.active = false;
-                        }
+                        nav.active = nav.name === name;
                         return nav;
                     });
                 },

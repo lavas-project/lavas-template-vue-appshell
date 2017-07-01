@@ -5,7 +5,7 @@
 
 
 // 定义主题列表
-const themeList = {
+let themeList = {
     // 定义主题名称
     myTheme: {
         themeColor: {

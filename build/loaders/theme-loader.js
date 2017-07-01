@@ -1,11 +1,15 @@
 /**
- * @file theme-loader
+ * @file theme loader
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-var loaderUtils = require('loader-utils');
-var STYLE_TAG_REG = /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
-var defaultVuetifyVariables = {
+// extract vuetify theme variables
+const theme = require('../../config/theme');
+const loaderUtils = require('loader-utils');
+
+const STYLE_TAG_REG = /(\<style.*?lang="styl(?:us)?".*?\>)([\S\s]*?)(\<\/style\>)/g;
+
+let defaultVuetifyVariables = {
     themeColor: {
         primary: '$blue.darken-2',
         accent: '$blue.accent-2',
@@ -27,48 +31,56 @@ var defaultVuetifyVariables = {
         'inactive-icon-percent': .38
     }
 };
-// extract vuetify theme variables
-var theme = require('../../config').theme;
-var themeColor = Object.assign({},
-    defaultVuetifyVariables.themeColor, theme.theme.themeColor);
-var themeColorTemplate = [
-    '$theme := {\n',
-        'primary: ' + themeColor.primary + '\n',
-        'accent: ' + themeColor.accent + '\n',
-        'secondary: ' + themeColor.secondary + '\n',
-        'info: ' + themeColor.info + '\n',
-        'warning: ' + themeColor.warning + '\n',
-        'error: ' + themeColor.error + '\n',
-        'success: ' + themeColor.success + '\n',
-    '}\n'
-].join('');
 
-var materialDesign = Object.assign({},
-    defaultVuetifyVariables.materialDesign, theme.theme.materialDesign);
-var materialDesignTemplate = [
-    '$material-custom := {\n',
-        'bg-color: ' + materialDesign['bg-color'] + '\n',
-        'fg-color: ' + materialDesign['fg-color'] + '\n',
-        'text-color: ' + materialDesign['text-color'] + '\n',
-        'primary-text-percent: ' + materialDesign['primary-text-percent'] + '\n',
-        'secondary-text-percent: ' + materialDesign['secondary-text-percent'] + '\n',
-        'disabledORhints-text-percent: ' + materialDesign['disabledORhints-text-percent'] + '\n',
-        'divider-percent: ' + materialDesign['divider-percent'] + '\n',
-        'active-icon-percent: ' + materialDesign['active-icon-percent'] + '\n',
-        'inactive-icon-percent: ' + materialDesign['inactive-icon-percent'] + '\n',
-    '}\n',
-    '$material-theme := $material-custom \n'
-].join('');
+let themeColor = Object.assign(
+    {},
+    defaultVuetifyVariables.themeColor,
+    theme.theme.themeColor
+);
+
+let themeColorTemplate = `
+    $theme := {
+        primary: ${themeColor.primary}
+        accent: ${themeColor.accent}
+        secondary: ${themeColor.secondary}
+        info: ${themeColor.info}
+        warning: ${themeColor.warning}
+        error: ${themeColor.error}
+        success: ${themeColor.success}
+    }
+`;
+
+let materialDesign = Object.assign(
+    {},
+    defaultVuetifyVariables.materialDesign,
+    theme.theme.materialDesign
+);
+
+let materialDesignTemplate = `
+    $material-custom := {
+        bg-color: ${materialDesign['bg-color']}
+        fg-color: ${materialDesign['fg-color']}
+        text-color: ${materialDesign['text-color']}
+        primary-text-percent: ${materialDesign['primary-text-percent']}
+        secondary-text-percent: ${materialDesign['secondary-text-percent']}
+        disabledORhints-text-percent: ${materialDesign['disabledORhints-text-percent']}
+        divider-percent: ${materialDesign['divider-percent']}
+        active-icon-percent: ${materialDesign['active-icon-percent']}
+        inactive-icon-percent: ${materialDesign['inactive-icon-percent']}
+    }
+    $material-theme := $material-custom
+`;
 
 // import global variables
-var importVariablesTemplate = '@import "~@/assets/styles/variables";\n';
+let importVariablesTemplate = '@import \'~@/assets/styles/variables\';';
+
 // add to global variables
-var injectedTemplate = importVariablesTemplate
+let injectedTemplate = importVariablesTemplate
     + themeColorTemplate + materialDesignTemplate;
 
 module.exports = function (source) {
     this.cacheable();
-    var options = loaderUtils.getOptions(this);
+    let options = loaderUtils.getOptions(this);
     if (options && options.injectInVueFile) {
         // inject variables into <style> tag in every '.vue' file
         return source.replace(STYLE_TAG_REG, '$1' + injectedTemplate + '$2$3');
