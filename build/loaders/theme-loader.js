@@ -92,6 +92,7 @@ module.exports = function (source) {
     this.cacheable();
     let options = loaderUtils.getOptions(this);
     if (options && options.injectInVueFile) {
+
         // 向每一个.vue文件的<style>块中注入
         return source.replace(STYLE_TAG_REG, `$1${injectedTemplate}$2$3`);
     }

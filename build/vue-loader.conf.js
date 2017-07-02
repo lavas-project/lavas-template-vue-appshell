@@ -3,6 +3,7 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
+'use strict';
 
 const utils = require('./utils');
 const config = require('../config');
@@ -13,6 +14,7 @@ module.exports = {
         sourceMap: isProduction
             ? config.build.productionSourceMap
             : config.dev.cssSourceMap,
+
         // extract: isProduction
         extract: true
     })

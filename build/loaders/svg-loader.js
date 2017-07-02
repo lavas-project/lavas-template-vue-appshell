@@ -17,6 +17,7 @@ const icons = iconConfig.icons;
 const prefix = iconConfig.prefix;
 
 module.exports = function (source) {
+
     // 从vue-awesome中导入
     if (icons) {
         source += icons.map(name => `import 'vue-awesome/icons/${name}';`).join('');

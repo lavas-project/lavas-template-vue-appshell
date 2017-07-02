@@ -52,7 +52,6 @@
 </template>
 
 <script>
-// import Vue from 'vue';
 import {mapState, mapActions} from 'vuex';
 import AppHeader from '@/components/AppHeader';
 import AppSidebar from '@/components/AppSidebar';
@@ -112,7 +111,6 @@ export default {
 </script>
 
 <style lang="stylus">
-/* csshint-disable */
 #app
     font-family 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing antialiased

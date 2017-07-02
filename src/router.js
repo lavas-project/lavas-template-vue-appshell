@@ -118,20 +118,24 @@ const HISTORY_STACK = [];
  * @return {boolean} 是否表示返回
  */
 function isForward(to, from) {
+
     // to 如果在这个列表中，始终认为是后退
     if (to.name && ALWAYS_BACK_PAGE.indexOf(to.name) !== -1) {
+
         // 清空历史
         HISTORY_STACK.length = 0;
         return false;
     }
 
     if (from.name && ALWAYS_BACK_PAGE.indexOf(from.name) !== -1) {
+
         // 如果是从 ALWAYS_BACK_PAGE 过来的，那么永远都是前进
         HISTORY_STACK.push(to.fullPath);
         return true;
     }
 
     if (to.name && ALWAYS_FORWARD_PAGE.indexOf(to.name) !== -1) {
+
         // to 如果在这个列表中，始终认为是前进
         HISTORY_STACK.push(to.fullPath);
         return true;

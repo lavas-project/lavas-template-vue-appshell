@@ -3,6 +3,7 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
+'use strict';
 
 require('eventsource-polyfill');
 const hotClient = require('webpack-hot-middleware/client?noInfo=true&reload=true');

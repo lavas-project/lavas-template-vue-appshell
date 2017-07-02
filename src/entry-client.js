@@ -11,7 +11,7 @@ import ProgressBar from '@/components/ProgressBar.vue';
 
 import '@/assets/styles/global.styl';
 
-// 全局的进度条，在组件中可通过$loading访问
+// 全局的进度条，在组件中可通过 $loading 访问
 let loading = Vue.prototype.$loading = new Vue(ProgressBar).$mount();
 let {app, router, store} = createApp();
 
@@ -19,6 +19,7 @@ document.body.appendChild(loading.$el);
 FastClick.attach(document.body);
 
 Vue.mixin({
+
     // 当复用的路由组件参数发生变化时，例如/detail/1 => /detail/2
     beforeRouteUpdate(to, from, next) {
 
@@ -71,6 +72,7 @@ router.beforeResolve((to, from, next) => {
 
     loading.start();
     Promise.all(activated.map(c => {
+
         /**
          * 两种情况下执行asyncData:
          * 1. 非keep-alive组件每次都需要执行

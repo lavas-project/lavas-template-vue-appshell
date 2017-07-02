@@ -3,7 +3,7 @@
  * @author *__ author __*{% if: *__ email __* %}(*__ email __*){% /if %}
  */
 
-/* eslint-disable no-console */
+'use strict';
 
 const path = require('path');
 const utils = require('./utils');
@@ -34,12 +34,14 @@ module.exports = {
     },
     module: {
         rules: [
+
             // register custom svgs
             {
                 resource: resolve('src/app.js'),
                 loader: 'svg-loader',
                 enforce: 'pre'
             },
+
             // inject vuetify theme variables
             {
                 resource: resolve('src/assets/styles/global'),
@@ -53,6 +55,7 @@ module.exports = {
                         loader: 'vue-loader',
                         options: vueLoaderConfig
                     },
+
                     // inject global variables in every .vue file
                     {
                         loader: 'theme-loader',
