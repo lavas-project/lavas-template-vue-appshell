@@ -86,17 +86,16 @@ export default {
 };
 </script>
 
-<style scoped>
-.progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    width: 0;
-    transition: width .2s, opacity .4s;
-    opacity: 1;
-    background-color: #efc14e;
-    z-index: 999999;
-}
+<style lang="stylus" scoped>
+.progress
+    position fixed
+    top 0
+    left 0
+    right 0
+    height 2px
+    width 0
+    transition width .2s, opacity .4s
+    opacity 1
+    background-color #efc14e
+    z-index 999999
 </style>

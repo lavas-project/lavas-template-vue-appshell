@@ -111,6 +111,9 @@ export default {
 </script>
 
 <style lang="stylus">
+
+@import './assets/styles/global'
+
 #app
     font-family 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing antialiased
