@@ -9,7 +9,7 @@ navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js'
 
         // service-worker.js 如果更新成功会 postMessage 给页面，内容为 'sw.update'
         if (e.data === 'sw.update') {
-            let metas = document.header.getElementsByTagName('meta');
+            let metas = document.head.getElementsByTagName('meta');
 
             for (let i = 0, len = metas.length; i < len; i++) {
                 let meta = metas[i];
