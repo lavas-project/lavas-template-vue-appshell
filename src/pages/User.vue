@@ -3,7 +3,7 @@
         <div class="app-user-title text-xs-center">
             <div class="user-avatar">
                 <p>
-                    <v-icon light class="user-avatar-icon">face</v-icon>
+                    <v-icon class="user-avatar-icon user-icon">face</v-icon>
                 </p>
                 <p>Lavas</p>
             </div>
@@ -11,15 +11,12 @@
                 <v-list-item v-for="item in items" :key="item.title">
                     <v-list-tile avatar>
                         <v-list-tile-avatar>
-                            <v-icon>{{ item.icon }}</v-icon>
+                            <v-icon class="user-icon">{{ item.icon }}</v-icon>
                         </v-list-tile-avatar>
                         <v-list-tile-content>
                             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                             <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                         </v-list-tile-content>
-                        <v-list-tile-action>
-                            <span class="user-item-count" v-if="item.count">{{ item.count }}</span>
-                        </v-list-tile-action>
                     </v-list-tile>
                 </v-list-item>
             </v-list>
@@ -91,8 +88,14 @@ export default {
 
 <style lang="stylus" scoped>
 
+$user-icon-inactive-color := rgba($material-theme.text-color, $material-theme.inactive-icon-percent)
+$user-icon-active-color := rgba($material-theme.text-color, $material-theme.active-icon-percent)
+
+.user-icon
+    color: $user-icon-inactive-color
+    
 .user-avatar
-    color #333
+    color: $user-icon-active-color
     margin 50px auto 20px
     display flex
     justify-content center
@@ -102,18 +105,7 @@ export default {
         width 80px
         height 80px
         border-radius 50%
-        background #666
+        background: $user-icon-inactive-color
         font-size 70px
-
-.user-item-count
-    height 24px
-    width 24px
-    border-radius 24px
-    background #ccc
-    font-size 14px
-    line-height 24px
-    color #fff
-    font-weight bold
-    vertical-align middle
 
 </style>

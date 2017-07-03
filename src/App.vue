@@ -114,7 +114,11 @@ export default {
 
 @import './assets/styles/global'
 
+body
+    background-color: $material-theme.bg-color
+
 #app
+    position static
     font-family 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
@@ -133,6 +137,7 @@ export default {
     height 100%
     display flex
     flex-direction column
+    transform translate3d(0, 0, 0)
 
     .app-shell-header
         position fixed

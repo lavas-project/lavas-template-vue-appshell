@@ -197,6 +197,9 @@ export default {
 
 <style lang="stylus" scoped>
 
+// 文本颜色
+$text-color := rgba($material-theme.text-color, $material-theme.primary-text-percent)
+
 // 左侧触发滑动宽度
 $swipe-width = 20px
 
@@ -260,6 +263,7 @@ a
 
         .material-icons
             font-size ($app-sidebar-left-icon-size)px
+            color $text-color
 
     .app-sidebar-block-text
         display inline-block
@@ -285,6 +289,9 @@ a
         line-height $app-sidebar-title-height
         background: $theme.primary
         text-align left
+        
+        .material-icons
+            color #fff
 
     .app-sidebar-blocks
         text-align left
@@ -292,7 +299,7 @@ a
         .app-sidebar-block
             padding 10px 0
             border-bottom 1px solid #e0e0e0
-            color #333
+            color $text-color
 
             .sub-list-title
                 height $app-sidebar-nav-height

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h2 class="gray--text">LAVAS</h2>
-        <h4 class="gray--text">[ˈlɑ:vəz]</h4>
+        <h2>LAVAS</h2>
+        <h4>[ˈlɑ:vəz]</h4>
     </div>
 </template>
 
@@ -46,9 +46,14 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+$text-color := rgba($material-theme.text-color, $material-theme.primary-text-percent)
+
 h2
     margin-top 50%
     font-size 46px
     font-weight 500
+    
+h2, h4
+    color $text-color
 
 </style>
