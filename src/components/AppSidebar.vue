@@ -22,7 +22,7 @@
             :class="classList"
             :style="inlineStyle">
             <!-- 头部 -->
-            <div v-if="title" class="app-sidebar-title" @click.stop="close">
+            <div v-if="title" class="app-sidebar-title" @click.stop="closeAndGo('/')">
                 <span class="app-sidebar-title-left-icon">
                     <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft" />
                     <icon v-else-if="title.svgLeft" :name="title.svgLeft"></icon>
@@ -36,6 +36,18 @@
                         <v-icon v-else-if="title.iconRight">{{ title.iconRight }}</v-icon>
                     </span>
                 </slot>
+            </div>
+
+            <!-- 用户信息 -->
+            <div v-if="user" class="app-sidebar-user">
+                 <div class="user-avatar">
+                    <v-icon light class="user-avatar-icon">face</v-icon>
+                 </div>
+                 <div class="user-info">
+                     <div class="user-name"><v-icon>person</v-icon>{{user.name}}</div>
+                     <div class="user-location"><v-icon>room</v-icon>{{user.location}}</div>
+                     <div class="user-email"><v-icon>email</v-icon>{{user.email}}</div>
+                 </div>
             </div>
 
             <!-- 导航列表分区块 -->
@@ -94,6 +106,7 @@ export default {
             'show',
             'slideFrom',
             'title',
+            'user',
             'blocks',
             'width',
             'showWidthThreshold'
@@ -103,17 +116,15 @@ export default {
                 'app-sidebar-content-right': this.slideFrom !== 'left'
             };
         },
+        /*eslint-disable*/
         inlineStyle() {
-
             // 拖拽时取消transition
             let transition = this.isDragging ? 'none' : 'transform .5s ease';
-
             // 隐藏状态时的位置
             let initTranslateX = this.widthInPx + BOX_SHADOW_WIDTH;
             if (this.slideFrom === 'left') {
                 initTranslateX = -initTranslateX;
             }
-
             // 当前水平方向平移距离
             let currentTranslateX = this.isDragging
                 ? this.translateX
@@ -134,16 +145,16 @@ export default {
         }
     },
     methods: {
-        caclWidth() {
-            this.clientWidth = document.body.clientWidth;
-
+        calcWidth() {
+            if (document) {
+                this.clientWidth = document.body.clientWidth;
+            }
             if (this.width > 1) {
                 this.widthInPx = this.width;
             }
             else {
                 this.widthInPx = Math.round(this.clientWidth * this.width);
             }
-
             if (this.showWidthThreshold > 1) {
                 this.showWidthThresholdInPx = this.showWidthThreshold;
             }
@@ -175,7 +186,6 @@ export default {
         handlePanEnd(event) {
             let {direction, deltaX} = event;
             this.isDragging = false;
-
             if (direction === this.closeDirection) {
                 this.close();
             }
@@ -188,17 +198,12 @@ export default {
         }
     },
     created() {
-        if (!this.$isServer) {
-            this.caclWidth();
-        }
+        this.calcWidth();
     }
 };
 </script>
 
 <style lang="stylus" scoped>
-
-// 文本颜色
-$text-color := rgba($material-theme.text-color, $material-theme.primary-text-percent)
 
 // 左侧触发滑动宽度
 $swipe-width = 20px
@@ -263,7 +268,6 @@ a
 
         .material-icons
             font-size ($app-sidebar-left-icon-size)px
-            color $text-color
 
     .app-sidebar-block-text
         display inline-block
@@ -289,9 +293,26 @@ a
         line-height $app-sidebar-title-height
         background: $theme.primary
         text-align left
-        
-        .material-icons
-            color #fff
+
+    .app-sidebar-user
+        padding 0 10px
+        font-size 16px
+        .user-avatar
+            margin 30px auto 0 auto
+            height 100px
+            width 100px
+            i
+                font-size 100px
+                color #666
+        .user-info
+            padding 20px 0
+            text-align center
+            border-bottom 1px solid #e0e0e0
+            >div
+                margin 5px 0
+                i
+                    font-size 18px
+                    margin-right 5px
 
     .app-sidebar-blocks
         text-align left
@@ -299,12 +320,12 @@ a
         .app-sidebar-block
             padding 10px 0
             border-bottom 1px solid #e0e0e0
-            color $text-color
+            color #333
 
             .sub-list-title
                 height $app-sidebar-nav-height
                 line-height $app-sidebar-nav-height
-                text-indent ($app-sidebar-left-icon-size + 28)px
+                text-indent ($app-sidebar-left-icon-size)px
                 font-weight bold
                 color #888
 
