@@ -136,6 +136,7 @@ export default {
                 }
 
                 if (x === -this.width) {
+                    this.showStatus = false;
                     this.unbindScroll();
                     return;
                 }
