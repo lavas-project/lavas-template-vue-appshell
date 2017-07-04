@@ -24,14 +24,14 @@
             <!-- 头部 -->
             <div v-if="title" class="app-sidebar-title" @click.stop="closeAndGo('/')">
                 <span class="app-sidebar-title-left-icon">
-                    <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft" />
+                    <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft"></img>
                     <icon v-else-if="title.svgLeft" :name="title.svgLeft"></icon>
                     <v-icon light v-else-if="title.iconLeft">{{ title.iconLeft }}</v-icon>
                 </span>
                 <span>{{ title.text }}</span>
                 <slot name="logo" class="app-sidebar-title-right-logo">
                     <span class="app-sidebar-title-right-logo">
-                        <img v-if="title.imageRight" :src="title.imageRight" :alt="title.altRight" />
+                        <img v-if="title.imageRight" :src="title.imageRight" :alt="title.altRight"></img>
                         <icon v-else-if="title.svgRight" :name="title.svgRight"></icon>
                         <v-icon v-else-if="title.iconRight">{{ title.iconRight }}</v-icon>
                     </span>
@@ -54,12 +54,12 @@
             <div v-if="blocks" class="app-sidebar-blocks">
                 <ul>
                     <!-- 单个区块 -->
-                    <li v-for="block in blocks" class="app-sidebar-block">
+                    <li v-for="(block, index) in blocks" :key="index" class="app-sidebar-block">
                         <div v-if="block.sublistTitle" class="sub-list-title">{{ block.sublistTitle }}</div>
                         <ul v-if="block.list">
-                            <li v-for="item in block.list" @click.stop="closeAndGo(item.route)">
+                            <li v-for="item in block.list" :key="item.text" @click.stop="closeAndGo(item.route)">
                                 <span v-if="item.icon || item.image || item.svg " class="app-sidebar-block-left-icon">
-                                    <img v-if="item.image" :src="item.image" :alt="item.alt" />
+                                    <img v-if="item.image" :src="item.image" :alt="item.alt"></img>
                                     <icon v-else-if="item.svg" :name="item.svg"></icon>
                                     <v-icon v-else-if="item.icon">{{ item.icon }}</v-icon>
                                 </span>
