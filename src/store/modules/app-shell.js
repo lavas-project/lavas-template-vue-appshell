@@ -185,7 +185,6 @@ export default {
             namespaced: true,
             state: {
                 show: false, // 是否显示sidebar
-                slideFrom: 'left', // 划出的方向
 
                 // 头部条的相关配置
                 title: {
@@ -199,12 +198,6 @@ export default {
                     svgRight: '',
                     iconRight: ''
                 },
-
-                // 最大宽度，可以是百分比，也可以以px为单位
-                width: 0.75,
-
-                // 滑动距离展示阈值
-                showWidthThreshold: 0.25,
 
                 // 分块组
                 blocks: [
