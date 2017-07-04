@@ -128,7 +128,6 @@ export default {
             this.changeOpacity();
 
             this.iscroll.on('scrollEnd', () => {
-
                 let {directionX, x} = this.iscroll;
 
                 if (x === 0) {
@@ -188,7 +187,9 @@ export default {
             }
             else {
                 if (this.iscroll && this.iscroll.x > -this.width) {
-                    this.iscroll.scrollTo(-this.width, 0, 200);
+                    setTimeout(() => {
+                        this.iscroll.scrollTo(-this.width, 0, 200);
+                    });
                 }
             }
         },
