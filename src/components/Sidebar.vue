@@ -35,11 +35,10 @@
 import IScroll from 'iscroll/build/iscroll-lite';
 
 const rAF = window.requestAnimationFrame
-|| window.webkitRequestAnimationFrame
-|| window.mozRequestAnimationFrame
-|| function (cb) {
-    window.setTimeout(cb, 1000 / 60);
-};
+    || window.webkitRequestAnimationFrame
+    || function (cb) {
+        window.setTimeout(cb, 1000 / 60);
+    };
 
 export default {
     props: {
