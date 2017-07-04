@@ -291,7 +291,6 @@ export default {
         transition opacity .3s
 
     &.collapse
-        // z-index 0
         margin-top 0 !important
         .sidebar-scroller
             padding-left 0 !important
