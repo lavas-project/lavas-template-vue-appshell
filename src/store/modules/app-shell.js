@@ -171,7 +171,7 @@ export default {
             },
             mutations: {
                 [types.SET_APP_HEADER](state, appHeader) {
-                    state.appHeader = Object.assign(state, appHeader);
+                    state = Object.assign(state, appHeader);
                 }
             }
         },

@@ -46,7 +46,7 @@ export function createRouter() {
                 component: Search
             },
             {
-                path: '*',
+                path: '/404',
                 name: 'notFound',
                 component: NotFound
             }
