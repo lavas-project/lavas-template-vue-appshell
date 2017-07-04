@@ -81,6 +81,13 @@ export default {
         }
     },
     methods: {
+
+        /**
+         * sidebar toggle touchstart 事件回调
+         * 用于记录 touch 初始位置
+         *
+         * @param {Event} e 原生事件对象
+         */
         toggleTouchStart(e) {
             if (this.wrapperClass.expand) {
                 return;
@@ -90,6 +97,13 @@ export default {
             this.startX = clientX;
             this.startY = clientY;
         },
+
+        /**
+         * sidebar toggle touchmove 事件回调
+         * 用于判断当前滑动距离和方向是否满足触发 sidebar 侧滑
+         *
+         * @param {Event} e 原生事件对象
+         */
         toggleTouchMove(e) {
             if (this.wrapperClass.expand) {
                 return;
@@ -98,6 +112,8 @@ export default {
             let {clientX, clientY} = e.touches[0];
             let x = clientX - this.startX;
 
+            // 只有当滑动距离大于 5 像素
+            // 同时滑动角度小于 30° 时，触发 sidebar 侧滑
             if (x > 5 && Math.abs(clientY - this.startY) / x < 0.577) {
                 this.wrapperClass.expand = true;
                 this.wrapperClass.collapse = false;
@@ -107,16 +123,28 @@ export default {
                 });
             }
         },
+
+        /**
+         * 点击 sidebar toggle 的事件回调
+         *
+         * @param {Event} e 原生点击事件
+         */
         toggleClick(e) {
             if (this.iscroll) {
                 this.forceToggleScroll(false);
             }
         },
+
+        /**
+         * 绑定 iscroll
+         *
+         * @param {Event} e 原生 touchmove 事件对象
+         */
         bindScroll(e) {
             if (this.iscroll) {
                 return;
             }
-
+            // 初始化 iscroll
             this.iscroll = new IScroll(this.$refs.sidebarWrapper, {
                 eventPassthrough: true,
                 scrollY: false,
@@ -124,23 +152,23 @@ export default {
                 bounce: false,
                 startX: -this.width
             });
-
+            // 触发蒙层的透明度计算
             this.changeOpacity();
 
             this.iscroll.on('scrollEnd', () => {
                 let {directionX, x} = this.iscroll;
-
+                // 完全展开的时候 showStatus 状态变为 true
                 if (x === 0) {
                     this.showStatus = true;
                     return;
                 }
-
+                // 完全收起的时候 showStatus 状态变为 false 同时解绑 iscroll
                 if (x === -this.width) {
                     this.showStatus = false;
                     this.unbindScroll();
                     return;
                 }
-
+                // 滑到一半的情况 就根据其不同的滑动状态去补完剩余操作
                 if (directionX > 0) {
                     this.forceToggleScroll(false);
                 }
@@ -151,35 +179,50 @@ export default {
                     this.showStatus = !this.showStatus;
                 }
             });
-
+            // 将原生事件对象透传给 iscroll 使其在初始化完成后立马实现滚动
             e && this.iscroll._start(e);
         },
+
+        /**
+         * 解绑并销毁 iscroll
+         */
         unbindScroll() {
             if (!this.iscroll) {
                 return;
             }
-
+            // 销毁 iscroll
             this.iscroll.destroy();
             this.iscroll = null;
+            // 清除各项数值
             this.wrapperClass.expand = false;
             this.wrapperClass.collapse = true;
             this.opacity = 0;
+            // 去掉 iscroll 遗留下的 style
             this.$refs.sidebarScroller.setAttribute(
                 'style',
                 `padding-left:${this.widthProp}`
             );
         },
+
+        /**
+         * 切换 iscroll 展开或收起
+         *
+         * @param {boolean} val true -> 展开 false -> 收起
+         */
         toggleScroll(val) {
-            if (val === true) {
+            if (val) {
                 this.wrapperClass.expand = true;
                 this.wrapperClass.collapse = false;
-
+                // 得等到 wrapper 的 class 改变生效，才能去做下一步的绑定操作
+                // 故而用 nextTick
                 this.$nextTick(() => {
                     if (!this.iscroll) {
                         this.bindScroll();
                     }
 
                     if (this.iscroll.x < 0) {
+                        // 部分机型在 iscroll 初始化完成后立即执行 scrollTo 会有问题
+                        // 用 nextTick 无效
                         setTimeout(() => {
                             this.iscroll && this.iscroll.scrollTo(0, 0, 200);
                         }, 10);
@@ -188,12 +231,19 @@ export default {
             }
             else {
                 if (this.iscroll && this.iscroll.x > -this.width) {
+                    // 解决部分机型在调用 scrollTo 完成的时候 不会触发 scrollEnd 事件的 bug
                     setTimeout(() => {
                         this.iscroll.scrollTo(-this.width, 0, 200);
                     });
                 }
             }
         },
+
+        /**
+         * 强制触发 iscroll 的切换
+         *
+         * @param {boolean} val 切换状态
+         */
         forceToggleScroll(val) {
             if (this.showStatus === val) {
                 this.toggleScroll(val);
@@ -202,6 +252,10 @@ export default {
                 this.showStatus = val;
             }
         },
+
+        /**
+         * 触发 mask 的透明度改变
+         */
         changeOpacity() {
             if (this.wrapperClass.expand && this.iscroll) {
                 this.opacity = (this.iscroll.x + this.width) / this.width * 0.5;
