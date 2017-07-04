@@ -8,7 +8,7 @@
     "dev": "node build/dev-server.js",
     "lint": "fecs ./ --rule --type 'vue,js,css'",
     "start": "node build/dev-server.js",
-    "build": "npm run lint & node build/build.js"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "fastclick": "^1.0.6",
