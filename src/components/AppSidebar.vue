@@ -1,26 +1,8 @@
 <template>
-    <div class="app-sidebar-wrapper">
-        <!-- 引入app-mask组件-->
-        <app-mask
-            :show="show || isDragging"
-            @close-mask="close"
-        ></app-mask>
-
-        <v-touch
-            @panmove="handlePanMove"
-            @panend="handlePanEnd"
-            :enabled="{ pan: true, tap: false }"
-            :pan-options="panOptions">
-            <div
-                class="app-sidebar-swipe"
-                :class="{'app-sidebar-swipe-right': slideFrom !== 'left'}"></div>
-        </v-touch>
-
+    <sidebar v-model="sidebarStatus">
         <!-- sidebar 内容部分 -->
         <div
-            class="app-sidebar-content"
-            :class="classList"
-            :style="inlineStyle">
+            class="app-sidebar-content">
             <!-- 头部 -->
             <div v-if="title" class="app-sidebar-title" @click.stop="closeAndGo('/')">
                 <span class="app-sidebar-title-left-icon">
@@ -70,141 +52,51 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </sidebar>
 </template>
 
 <script>
 import {mapState} from 'vuex';
-import AppMask from './AppMask.vue';
-
-// hammer.js 方向常量
-const DIRECTION_LEFT = 2;
-const DIRECTION_RIGHT = 4;
-
-// 左/右阴影宽度
-const BOX_SHADOW_WIDTH = 12;
+import Sidebar from './sidebar';
 
 export default {
     components: {
-        AppMask
-    },
-    data() {
-        return {
-            isDragging: false, // 是否处于拖拽状态
-            translateX: 0, // 当前水平位移
-            clientWidth: 0, // 窗口宽度
-            widthInPx: 0, // sidebar以px为单位的宽度
-            showWidthThresholdInPx: 0, // 展示阈值以px为单位
-            panOptions: { // hammer.js pan手势配置对象
-                direction: 'horizontal',
-                threshold: 10
-            }
-        };
+        Sidebar
     },
     computed: {
         ...mapState('appShell/appSidebar', [
             'show',
-            'slideFrom',
             'title',
             'user',
-            'blocks',
-            'width',
-            'showWidthThreshold'
+            'blocks'
         ]),
-        classList() {
-            return {
-                'app-sidebar-content-right': this.slideFrom !== 'left'
-            };
-        },
-        /*eslint-disable*/
-        inlineStyle() {
-            // 拖拽时取消transition
-            let transition = this.isDragging ? 'none' : 'transform .5s ease';
-            // 隐藏状态时的位置
-            let initTranslateX = this.widthInPx + BOX_SHADOW_WIDTH;
-            if (this.slideFrom === 'left') {
-                initTranslateX = -initTranslateX;
+        sidebarStatus: {
+            get() {
+                return this.show;
+            },
+            set(val) {
+                if (val) {
+                    this.$emit('show-sidebar');
+                }
+                else {
+                    this.$emit('hide-sidebar');
+                }
             }
-            // 当前水平方向平移距离
-            let currentTranslateX = this.isDragging
-                ? this.translateX
-                : (this.show ? 0 : initTranslateX);
-            let styleObj = {
-                'width': `${this.widthInPx}px`,
-                'transition': transition,
-                '-webkit-transition': transition,
-                'transform': `translate3d(${currentTranslateX}px, 0, 0)`,
-                '-webkit-transform': `translate3d(${currentTranslateX}px, 0, 0)`,
-                [this.slideFrom]: 0 // 展示状态绝对定位靠左/右
-            };
-
-            return styleObj;
-        },
-        closeDirection() {
-            return this.slideFrom === 'left' ? DIRECTION_LEFT : DIRECTION_RIGHT;
         }
     },
     methods: {
-        calcWidth() {
-            if (document) {
-                this.clientWidth = document.body.clientWidth;
-            }
-            if (this.width > 1) {
-                this.widthInPx = this.width;
-            }
-            else {
-                this.widthInPx = Math.round(this.clientWidth * this.width);
-            }
-            if (this.showWidthThreshold > 1) {
-                this.showWidthThresholdInPx = this.showWidthThreshold;
-            }
-            else {
-                this.showWidthThresholdInPx = this.widthInPx * this.showWidthThreshold;
-            }
-        },
         close() {
-            this.$emit('hide-sidebar');
-            this.translateX = Math.round(-this.widthInPx);
+            this.sidebarStatus = false;
         },
         closeAndGo(route) {
             this.$router.push(route);
             this.close();
-        },
-        open() {
-            this.$emit('show-sidebar');
-            this.translateX = 0;
-        },
-        handlePanMove(event) {
-            let deltaX = event.deltaX;
-            let translateX = deltaX + (this.slideFrom === 'left' ? -this.widthInPx : this.widthInPx);
-            this.isDragging = true;
-            if (this.widthInPx < Math.abs(deltaX)) { // 滑动超过了sidebar宽度
-                return;
-            }
-            this.translateX = Math.round(translateX);
-        },
-        handlePanEnd(event) {
-            let {direction, deltaX} = event;
-            this.isDragging = false;
-            if (direction === this.closeDirection) {
-                this.close();
-            }
-            else if (Math.abs(deltaX) > this.showWidthThresholdInPx) { // 停止时滑动距离超过阈值，认为需要展示
-                this.open();
-            }
-            else {
-                this.close();
-            }
         }
-    },
-    created() {
-        this.calcWidth();
     }
 };
 </script>
 
 <style lang="stylus" scoped>
-
 // 左侧触发滑动宽度
 $swipe-width = 20px
 
@@ -216,30 +108,7 @@ a
     text-decoration none
     color #333
 
-.app-sidebar-wrapper
-    z-index 9999
-
-    .app-sidebar-swipe
-        position fixed
-        top 0
-        bottom 0
-        left 0
-        width $swipe-width
-        user-select none
-
-        &.app-sidebar-swipe-right
-            left initial
-            right 0
-
 .app-sidebar-content
-    position fixed
-    top 0
-    height 100%
-    background: $material-theme.bg-color
-    box-shadow 3px 0 8px 1px rgba(0, 0, 0, 0.4)
-    overflow-y auto
-    z-index 9999
-
     &.app-sidebar-content-right
         box-shadow -3px 0 8px 1px rgba(0, 0, 0, 0.4)
 
@@ -340,5 +209,4 @@ a
 
             &:last-child
                 border-bottom none
-
 </style>
