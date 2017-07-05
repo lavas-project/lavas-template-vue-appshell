@@ -167,6 +167,7 @@ body
             transition transform 0.4s cubic-bezier(.55, 0, .1, 1)
             background: $material-theme.bg-color
             color: $material-theme.text-color
+            -webkit-overflow-scrolling touch
 
             // 隐藏掉scrollbar
             &::-webkit-scrollbar
