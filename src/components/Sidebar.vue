@@ -68,7 +68,7 @@ export default {
     computed: {
         itsWidth() {
             return this.width < 1
-                ? this.width * document.documentElement.clientWidth
+                ? Math.round(this.width * document.documentElement.clientWidth)
                 : this.width;
         },
         widthProp() {
@@ -167,9 +167,7 @@ export default {
                     return;
                 }
                 // 完全收起的时候 showStatus 状态变为 false 同时解绑 iscroll
-                if (x === -this.itsWidth
-                    || Math.floor(x) === -Math.floor(this.itsWidth)
-                ) {
+                if (x === -this.itsWidth) {
                     this.unbindScroll();
                     this.showStatus = false;
                     return;
