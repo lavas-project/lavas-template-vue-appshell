@@ -48,7 +48,7 @@ export default {
         },
         width: {
             'type': Number,
-            'default': 300
+            'default': 0.75
         }
     },
     data() {
@@ -57,7 +57,6 @@ export default {
             startX: 0,
             startY: 0,
             wrapperClass: {
-                'wd-sidebar': true,
                 'expand': false,
                 'collapse': true,
                 'w-left': true
