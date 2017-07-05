@@ -167,9 +167,11 @@ export default {
                     return;
                 }
                 // 完全收起的时候 showStatus 状态变为 false 同时解绑 iscroll
-                if (x === -this.itsWidth) {
-                    this.showStatus = false;
+                if (x === -this.itsWidth
+                    || Math.floor(x) === -Math.floor(this.itsWidth)
+                ) {
                     this.unbindScroll();
+                    this.showStatus = false;
                     return;
                 }
                 // 滑到一半的情况 就根据其不同的滑动状态去补完剩余操作
