@@ -47,7 +47,7 @@ export default {
             'default': false
         },
         width: {
-            'type': [Array, Number],
+            'type': Number,
             'default': 300
         }
     },
@@ -67,8 +67,13 @@ export default {
         };
     },
     computed: {
+        itsWidth() {
+            return this.width < 1
+                ? this.width * document.documentElement.clientWidth
+                : this.width;
+        },
         widthProp() {
-            return this.width + 'px';
+            return this.itsWidth + 'px';
         }
     },
     watch: {
@@ -150,7 +155,7 @@ export default {
                 scrollY: false,
                 scrollX: true,
                 bounce: false,
-                startX: -this.width
+                startX: -this.itsWidth
             });
             // 触发蒙层的透明度计算
             this.changeOpacity();
@@ -163,7 +168,7 @@ export default {
                     return;
                 }
                 // 完全收起的时候 showStatus 状态变为 false 同时解绑 iscroll
-                if (x === -this.width) {
+                if (x === -this.itsWidth) {
                     this.showStatus = false;
                     this.unbindScroll();
                     return;
@@ -230,10 +235,10 @@ export default {
                 });
             }
             else {
-                if (this.iscroll && this.iscroll.x > -this.width) {
+                if (this.iscroll && this.iscroll.x > -this.itsWidth) {
                     // 解决部分机型在调用 scrollTo 完成的时候 不会触发 scrollEnd 事件的 bug
                     setTimeout(() => {
-                        this.iscroll.scrollTo(-this.width, 0, 200);
+                        this.iscroll.scrollTo(-this.itsWidth, 0, 200);
                     });
                 }
             }
@@ -258,7 +263,7 @@ export default {
          */
         changeOpacity() {
             if (this.wrapperClass.expand && this.iscroll) {
-                this.opacity = (this.iscroll.x + this.width) / this.width * 0.5;
+                this.opacity = (this.iscroll.x + this.itsWidth) / this.itsWidth * 0.5;
                 rAF(this.changeOpacity.bind(this));
             }
         }
