@@ -29,8 +29,11 @@ module.exports = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap})
             .concat(SkeletonWebpackPlugin.loader({ // visit by route '/skeleton' in dev mode
-                entry: 'skeleton',
-                routerEntry: resolve('src/router.js')
+                resource: resolve('src/router.js'),
+                options: {
+                    entry: 'skeleton',
+                    routePathTemplate: '/skeleton'
+                }
             }))
     },
 
