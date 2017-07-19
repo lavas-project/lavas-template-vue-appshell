@@ -89,8 +89,6 @@ let webpackConfig = merge(baseWebpackConfig, {
             chunksSortMode: 'dependency'
         }),
 
-        
-
         // split vendor js into its own file
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
@@ -106,6 +104,7 @@ let webpackConfig = merge(baseWebpackConfig, {
             }
         }),
 
+        // split vue, vue-router and vuex into vue chunk
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vue',
             minChunks: function (module, count) {
@@ -123,8 +122,6 @@ let webpackConfig = merge(baseWebpackConfig, {
             name: 'manifest',
             chunks: ['vue']
         }),
-
-        
 
         // copy custom static assets
         new CopyWebpackPlugin([
