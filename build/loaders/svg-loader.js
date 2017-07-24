@@ -11,12 +11,33 @@
 
 const fs = require('fs');
 const path = require('path');
-const iconConfig = require('../../config/icon');
-const svgDir = iconConfig.svgDir;
-const icons = iconConfig.icons;
-const prefix = iconConfig.prefix;
+const iconConfigPath = require.resolve('../../config/icon');
 
 module.exports = function (source) {
+    // 删除require缓存
+    delete require.cache[iconConfigPath];
+
+    const iconConfig = require(iconConfigPath);
+    const svgDir = iconConfig.svgDir;
+    const icons = iconConfig.icons;
+    const prefix = iconConfig.prefix;
+
+    // 验证`svg`文件夹
+    try {
+        if (!fs.statSync(svgDir).isDirectory()) {
+            throw new Error(`Invalid directory of svg: ${svgDir}`);
+        }
+    }
+    catch (err) {
+        this.emitError(err);
+        return source;
+    }
+
+    // 监听`svg`文件夹变化
+    this.addContextDependency(svgDir);
+
+    // 监听`config/icon.js`文件变化
+    this.addDependency(iconConfigPath);
 
     // 从vue-awesome中导入
     if (icons) {

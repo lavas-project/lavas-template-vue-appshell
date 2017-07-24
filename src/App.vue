@@ -5,13 +5,11 @@
                 class="app-shell-header"
                 @click-menu="handleClickHeaderMenu"
                 @click-back="handleClickHeaderBack">
-                <template slot="logo"></template>
             </app-header>
             <app-sidebar
                 @hide-sidebar = "handleHideSidebar"
                 @show-sidebar = "handleShowSidebar"
             >
-                <template slot="logo"><span></span></template>
             </app-sidebar>
             <div class="app-view-wrapper">
                 <transition
