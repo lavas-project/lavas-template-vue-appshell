@@ -29,7 +29,6 @@
             <div class="app-header-right">
                 <slot name="actions"
                     v-for="(action, actionIdx) in actions"
-                    :key="actionIdx"
                     :icon="action.icon"
                     :route="action.route">
                     <v-btn
