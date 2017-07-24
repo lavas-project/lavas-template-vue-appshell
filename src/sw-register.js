@@ -9,17 +9,10 @@ navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js'
 
         // service-worker.js 如果更新成功会 postMessage 给页面，内容为 'sw.update'
         if (e.data === 'sw.update') {
-            let metas = document.head.getElementsByTagName('meta');
-
-            for (let i = 0, len = metas.length; i < len; i++) {
-                let meta = metas[i];
-
-                if (meta.name === 'theme-color') {
-                    meta.content = '#000';
-                }
-            }
-
             let dom = document.createElement('div');
+            let themeColor = document.querySelector('meta[name=theme-color]');
+
+            themeColor && (themeColor.content = '#000');
 
             /* eslint-disable max-len */
             dom.innerHTML = `
