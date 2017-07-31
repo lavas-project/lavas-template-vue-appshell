@@ -49,11 +49,14 @@ export default {
         width: {
             'type': Number,
             'default': 0.75
+        },
+        duration: {
+            'type': Number,
+            'default': 200
         }
     },
     data() {
         return {
-            showStatus: this.value,
             startX: 0,
             startY: 0,
             wrapperClass: {
@@ -73,15 +76,24 @@ export default {
         },
         widthProp() {
             return this.itsWidth + 'px';
+        },
+        status: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                this.$emit('input', val);
+            }
         }
     },
     watch: {
-        value() {
-            this.showStatus = this.value;
-        },
-        showStatus(val) {
-            this.toggleScroll(val);
-            this.$emit('input', val);
+        status(val) {
+            if (val) {
+                this.expand();
+            }
+            else {
+                this.collapse();
+            }
         }
     },
     methods: {
@@ -134,9 +146,7 @@ export default {
          * @param {Event} e 原生点击事件
          */
         toggleClick(e) {
-            if (this.iscroll) {
-                this.forceToggleScroll(false);
-            }
+            this.status = false;
         },
 
         /**
@@ -156,35 +166,66 @@ export default {
                 bounce: false,
                 startX: -this.itsWidth
             });
-            // 触发蒙层的透明度计算
-            this.changeOpacity();
 
             this.iscroll.on('scrollEnd', () => {
                 let {directionX, x} = this.iscroll;
                 // 完全展开的时候 showStatus 状态变为 true
                 if (x === 0) {
-                    this.showStatus = true;
-                    return;
+                    this.status = true;
                 }
                 // 完全收起的时候 showStatus 状态变为 false 同时解绑 iscroll
-                if (x === -this.itsWidth) {
-                    this.unbindScroll();
-                    this.showStatus = false;
-                    return;
+                else if (x === -this.itsWidth) {
+                    this.status = false;
                 }
                 // 滑到一半的情况 就根据其不同的滑动状态去补完剩余操作
-                if (directionX > 0) {
-                    this.forceToggleScroll(false);
+                else if (directionX > 0) {
+                    this.status = false;
                 }
                 else if (directionX < 0) {
-                    this.forceToggleScroll(true);
+                    this.status = true;
                 }
                 else {
-                    this.showStatus = !this.showStatus;
+                    this.status = !this.status;
                 }
             });
+
+            // 触发蒙层的透明度计算
+            this.changeOpacity();
             // 将原生事件对象透传给 iscroll 使其在初始化完成后立马实现滚动
             e && this.iscroll._start(e);
+        },
+
+        expand() {
+            this.wrapperClass.expand = true;
+            this.wrapperClass.collapse = false;
+            // 得等到 wrapper 的 class 改变生效，才能去做下一步的绑定操作
+            // 故而用 nextTick
+            this.$nextTick(() => {
+                if (!this.iscroll) {
+                    this.bindScroll();
+                }
+
+                if (this.iscroll.x < 0) {
+                    // 部分机型在 iscroll 初始化完成后立即执行 scrollTo 会有问题
+                    // 用 nextTick 无效
+                    setTimeout(() => {
+                        this.iscroll && this.iscroll.scrollTo(0, 0, this.duration);
+                    }, 10);
+                }
+            });
+        },
+
+        collapse() {
+            if (this.iscroll && this.iscroll.x > -this.itsWidth) {
+                // 解决部分机型在调用 scrollTo 完成的时候 不会触发 scrollEnd 事件的 bug
+                setTimeout(() => {
+                    this.iscroll.scrollTo(-this.itsWidth, 0, this.duration);
+                });
+
+                setTimeout(() => {
+                    this.unbindScroll();
+                }, this.duration + 10);
+            }
         },
 
         /**
@@ -206,55 +247,6 @@ export default {
                 'style',
                 `padding-left:${this.widthProp}`
             );
-        },
-
-        /**
-         * 切换 iscroll 展开或收起
-         *
-         * @param {boolean} val true -> 展开 false -> 收起
-         */
-        toggleScroll(val) {
-            if (val) {
-                this.wrapperClass.expand = true;
-                this.wrapperClass.collapse = false;
-                // 得等到 wrapper 的 class 改变生效，才能去做下一步的绑定操作
-                // 故而用 nextTick
-                this.$nextTick(() => {
-                    if (!this.iscroll) {
-                        this.bindScroll();
-                    }
-
-                    if (this.iscroll.x < 0) {
-                        // 部分机型在 iscroll 初始化完成后立即执行 scrollTo 会有问题
-                        // 用 nextTick 无效
-                        setTimeout(() => {
-                            this.iscroll && this.iscroll.scrollTo(0, 0, 200);
-                        }, 10);
-                    }
-                });
-            }
-            else {
-                if (this.iscroll && this.iscroll.x > -this.itsWidth) {
-                    // 解决部分机型在调用 scrollTo 完成的时候 不会触发 scrollEnd 事件的 bug
-                    setTimeout(() => {
-                        this.iscroll.scrollTo(-this.itsWidth, 0, 200);
-                    });
-                }
-            }
-        },
-
-        /**
-         * 强制触发 iscroll 的切换
-         *
-         * @param {boolean} val 切换状态
-         */
-        forceToggleScroll(val) {
-            if (this.showStatus === val) {
-                this.toggleScroll(val);
-            }
-            else {
-                this.showStatus = val;
-            }
         },
 
         /**
