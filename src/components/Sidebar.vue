@@ -23,8 +23,6 @@
                     'padding-left': widthProp
                 }"
                 ref="sidebarToggle"
-                @touchstart="toggleTouchStart"
-                @touchmove="toggleTouchMove"
                 @click.stop.prevent="toggleClick"
             ></div>
         </div>
@@ -40,11 +38,17 @@ const rAF = window.requestAnimationFrame
         window.setTimeout(cb, 1000 / 60);
     };
 
+const DEFAULT_PROP = 'default';
+
 export default {
     props: {
         value: {
             'type': Boolean,
             'default': false
+        },
+        enable: {
+            'type': Boolean,
+            'default': true
         },
         width: {
             'type': Number,
@@ -53,10 +57,23 @@ export default {
         duration: {
             'type': Number,
             'default': 200
+        },
+        region: {
+            'type': Object,
+            [DEFAULT_PROP]() {
+                return {
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    width: 25
+                };
+            }
         }
     },
     data() {
         return {
+            clientWidth: 320,
+            clientHeight: 568,
             startX: 0,
             startY: 0,
             wrapperClass: {
@@ -71,7 +88,7 @@ export default {
     computed: {
         itsWidth() {
             return this.width < 1
-                ? Math.round(this.width * document.documentElement.clientWidth)
+                ? Math.round(this.width * this.clientWidth)
                 : this.width;
         },
         widthProp() {
@@ -84,6 +101,26 @@ export default {
             set(val) {
                 this.$emit('input', val);
             }
+        },
+        zone() {
+            let {top, right, bottom, left, width, height} = this.region;
+            let clientWidth = this.clientWidth;
+            let clientHeight = this.clientHeight;
+
+            return {
+                top: top === undefined
+                    ? (clientHeight - bottom - height)
+                    : top,
+                left: left === undefined
+                    ? (clientWidth - right - width)
+                    : left,
+                width: width === undefined
+                    ? (clientWidth - left - right)
+                    : width,
+                height: height === undefined
+                    ? (clientHeight - top - left)
+                    : height
+            };
         }
     },
     watch: {
@@ -96,32 +133,54 @@ export default {
             }
         }
     },
+    mounted() {
+        this.clientWidth = clientWidth();
+        this.clientHeight = clientHeight();
+        document.body.addEventListener('touchstart', this.touchStart.bind(this));
+        document.body.addEventListener('touchmove', this.touchMove.bind(this));
+    },
     methods: {
 
         /**
-         * sidebar toggle touchstart 事件回调
          * 用于记录 touch 初始位置
          *
          * @param {Event} e 原生事件对象
          */
-        toggleTouchStart(e) {
+        touchStart(e) {
             if (this.wrapperClass.expand) {
                 return;
             }
 
+            if (!this.enable) {
+                return;
+            }
+
             let {clientX, clientY} = e.touches[0];
+            let {left, top, width, height} = this.zone;
+
+            if (clientX < left
+                || clientX > left + width
+                || clientY < top
+                || clientY > top + height
+            ) {
+                return;
+            }
+
             this.startX = clientX;
             this.startY = clientY;
         },
 
         /**
-         * sidebar toggle touchmove 事件回调
          * 用于判断当前滑动距离和方向是否满足触发 sidebar 侧滑
          *
          * @param {Event} e 原生事件对象
          */
-        toggleTouchMove(e) {
+        touchMove(e) {
             if (this.wrapperClass.expand) {
+                return;
+            }
+
+            if (!this.enable) {
                 return;
             }
 
@@ -141,7 +200,7 @@ export default {
         },
 
         /**
-         * 点击 sidebar toggle 的事件回调
+         * 点击 sidebar 阴影部分收起 sidebar
          *
          * @param {Event} e 原生点击事件
          */
@@ -158,14 +217,18 @@ export default {
             if (this.iscroll) {
                 return;
             }
+
             // 初始化 iscroll
-            this.iscroll = new IScroll(this.$refs.sidebarWrapper, {
-                eventPassthrough: true,
-                scrollY: false,
-                scrollX: true,
-                bounce: false,
-                startX: -this.itsWidth
-            });
+            this.iscroll = new IScroll(
+                this.$refs.sidebarWrapper,
+                {
+                    eventPassthrough: true,
+                    scrollY: false,
+                    scrollX: true,
+                    bounce: false,
+                    startX: -this.itsWidth
+                }
+            );
 
             this.iscroll.on('scrollEnd', () => {
                 let {directionX, x} = this.iscroll;
@@ -195,6 +258,9 @@ export default {
             e && this.iscroll._start(e);
         },
 
+        /**
+         * 展开侧边栏
+         */
         expand() {
             this.wrapperClass.expand = true;
             this.wrapperClass.collapse = false;
@@ -215,13 +281,16 @@ export default {
             });
         },
 
+        /**
+         * 收起侧边栏
+         */
         collapse() {
             if (this.iscroll && this.iscroll.x > -this.itsWidth) {
                 // 解决部分机型在调用 scrollTo 完成的时候 不会触发 scrollEnd 事件的 bug
                 setTimeout(() => {
                     this.iscroll.scrollTo(-this.itsWidth, 0, this.duration);
                 });
-
+                // 滚动结束后解绑 iscroll
                 setTimeout(() => {
                     this.unbindScroll();
                 }, this.duration + 10);
@@ -260,6 +329,15 @@ export default {
         }
     }
 };
+
+function clientWidth() {
+    return document.documentElement.clientWidth;
+}
+
+function clientHeight() {
+    return document.documentElement.clientHeight;
+}
+
 </script>
 
 <style lang="stylus" scoped>
@@ -281,7 +359,8 @@ export default {
         top 0
         bottom 0
         left 0
-        width 45px
+        width 0
+        // width 45px
         z-index 100
         opacity 0
         transition opacity .3s

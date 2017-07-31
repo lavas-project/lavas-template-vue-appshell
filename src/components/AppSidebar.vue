@@ -1,5 +1,7 @@
 <template>
-    <sidebar v-model="sidebarStatus">
+    <sidebar v-model="sidebarStatus"
+        :enable="enableSidebar"
+    >
         <!-- sidebar 内容部分 -->
         <div
             class="app-sidebar-content">
@@ -82,6 +84,10 @@ export default {
                     this.$emit('hide-sidebar');
                 }
             }
+        },
+        enableSidebar() {
+            return this.$store.state.appShell.appHeader.show
+                && this.$store.state.appShell.appHeader.showMenu;
         }
     },
     methods: {
