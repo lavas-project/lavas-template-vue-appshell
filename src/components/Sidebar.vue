@@ -65,7 +65,7 @@ export default {
                     top: 0,
                     bottom: 0,
                     left: 0,
-                    width: 25
+                    width: 40
                 };
             }
         }
@@ -76,6 +76,7 @@ export default {
             clientHeight: 568,
             startX: 0,
             startY: 0,
+            scrollEnable: false,
             wrapperClass: {
                 'expand': false,
                 'collapse': true,
@@ -166,6 +167,7 @@ export default {
                 return;
             }
 
+            this.scrollEnable = true;
             this.startX = clientX;
             this.startY = clientY;
         },
@@ -176,11 +178,7 @@ export default {
          * @param {Event} e 原生事件对象
          */
         touchMove(e) {
-            if (this.wrapperClass.expand) {
-                return;
-            }
-
-            if (!this.enable) {
+            if (!this.scrollEnable) {
                 return;
             }
 
@@ -310,6 +308,7 @@ export default {
             // 清除各项数值
             this.wrapperClass.expand = false;
             this.wrapperClass.collapse = true;
+            this.scrollEnable = false;
             this.opacity = 0;
             // 去掉 iscroll 遗留下的 style
             this.$refs.sidebarScroller.setAttribute(
