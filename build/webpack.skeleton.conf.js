@@ -15,7 +15,9 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = merge(baseWebpackConfig, {
     target: 'node',
     devtool: false,
-    entry: './src/entry-skeleton.js',
+    entry: {
+        app: './src/entry-skeleton.js'
+    },
     output: Object.assign({}, baseWebpackConfig.output, {
         filename: 'skeleton-bundle.js',
         libraryTarget: 'commonjs2'
