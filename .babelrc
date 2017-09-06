@@ -6,10 +6,18 @@
                 "modules": false
             }
         ],
+        "es2015",
         "stage-2"
     ],
     "plugins": [
-        "transform-runtime"
+        "transform-runtime",
+        "add-filehash",
+        ["transform-imports", {
+            "vuetify": {
+                "transform": "vuetify/src/components/${member}",
+                "preventFullImport": true
+            }
+        }]
     ],
     "comments": false,
     "env": {

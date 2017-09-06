@@ -4,13 +4,38 @@
  */
 
 import Vue from 'vue';
-import Vuetify from 'vuetify';
+import {
+    Vuetify,
+    VBtn,
+    VApp,
+    VList,
+    VIcon,
+    VProgressCircular,
+    VDivider,
+    VBottomNav,
+    VGrid,
+    VAvatar
+} from 'vuetify';
 import {createRouter} from './router';
 import store from './store';
 import App from './App.vue';
 import Icon from 'vue-awesome/components/Icon.vue';
 
-Vue.use(Vuetify);
+
+Vue.use(Vuetify, {
+    components: {
+        VApp,
+        VBtn,
+        VList,
+        VIcon,
+        VProgressCircular,
+        VDivider,
+        VBottomNav,
+        VGrid,
+        VAvatar
+    }
+});
+
 Vue.component('icon', Icon);
 
 Vue.config.productionTip = false;

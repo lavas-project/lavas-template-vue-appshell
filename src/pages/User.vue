@@ -8,8 +8,8 @@
                 <p>Lavas</p>
             </div>
             <v-list two-line>
-                <v-list-item v-for="item in items" :key="item.title">
-                    <v-list-tile avatar>
+                <div>
+                    <v-list-tile avatar v-for="item in items" :key="item.title">
                         <v-list-tile-avatar>
                             <v-icon class="user-icon">{{ item.icon }}</v-icon>
                         </v-list-tile-avatar>
@@ -18,7 +18,7 @@
                             <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                </v-list-item>
+                </div>
             </v-list>
         </div>
     </div>
@@ -93,7 +93,7 @@ $user-icon-active-color := rgba($material-theme.text-color, $material-theme.acti
 
 .user-icon
     color: $user-icon-inactive-color
-    
+
 .user-avatar
     color: $user-icon-active-color
     margin 50px auto 20px
@@ -107,5 +107,7 @@ $user-icon-active-color := rgba($material-theme.text-color, $material-theme.acti
         border-radius 50%
         background: $user-icon-inactive-color
         font-size 70px
+.material-icons
+    display inline-flex
 
 </style>

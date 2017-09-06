@@ -64,7 +64,7 @@ module.exports = {
                         }
                     }
                 ],
-                include: [resolve('src')]
+                include: [resolve('src'), resolve('node_modules/vuetify')]
             },
             {
                 test: /\.vue$/,
@@ -74,12 +74,12 @@ module.exports = {
                         options: vueLoaderConfig
                     }
                 ],
-                exclude: [resolve('src')]
+                exclude: [resolve('src'), resolve('node_modules/vuetify')]
             },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                include: [resolve('src')]
+                include: [resolve('src'), resolve('node_modules/vuetify')]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
