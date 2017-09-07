@@ -41,6 +41,7 @@ export default {
                 }
             ]
         });
+
         this.activateBottomNav('home');
         this.showBottomNav();
     }

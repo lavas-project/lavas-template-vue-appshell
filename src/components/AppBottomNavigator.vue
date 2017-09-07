@@ -5,12 +5,13 @@
             <slot name="navs">
                 <v-bottom-nav
                     :value="show"
+                    :active="activeNav"
                     absolute
                     class="transparent">
                     <v-btn
                         v-for="nav in navs"
                         :key="nav.name"
-                        :value="nav.active"
+                        :value="nav.name"
                         @click.native="handleNavClick(nav.route, nav.name)"
                         class="teal--text"
                         flat primary>
@@ -34,7 +35,13 @@ export default {
         ...mapState('appShell/appBottomNavigator', [
             'show',
             'navs'
-        ])
+        ]),
+        activeNav() {
+            let nav = this.navs.find((nav, i) => {
+                return nav.active;
+            });
+            return nav ? nav.name : 'home';
+        }
     },
     methods: {
 
