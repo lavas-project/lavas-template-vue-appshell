@@ -13,7 +13,6 @@
                         :key="nav.name"
                         :value="nav.name"
                         @click.native="handleNavClick(nav.route, nav.name)"
-                        class="teal--text"
                         flat primary>
                         <span>{{ nav.text }}</span>
                         <icon v-if="nav.svg" :name="nav.svg" class="app-header-icon"></icon>

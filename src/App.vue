@@ -1,51 +1,53 @@
 <template>
     <div id="app">
-        <div class="app-shell app-shell-bottom-navigation">
-            <app-header
-                class="app-shell-header"
-                @click-menu="handleClickHeaderMenu"
-                @click-back="handleClickHeaderBack">
-            </app-header>
-            <app-sidebar
-                @hide-sidebar = "handleHideSidebar"
-                @show-sidebar = "handleShowSidebar"
-            >
-            </app-sidebar>
-            <div class="app-view-wrapper">
-                <transition
-                    :name="pageTransitionName"
-                    @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter">
-                    <keep-alive>
+        <v-app>
+            <div class="app-shell app-shell-bottom-navigation">
+                <app-header
+                    class="app-shell-header"
+                    @click-menu="handleClickHeaderMenu"
+                    @click-back="handleClickHeaderBack">
+                </app-header>
+                <app-sidebar
+                    @hide-sidebar = "handleHideSidebar"
+                    @show-sidebar = "handleShowSidebar"
+                >
+                </app-sidebar>
+                <div class="app-view-wrapper">
+                    <transition
+                        :name="pageTransitionName"
+                        @before-enter="handleBeforeEnter"
+                        @after-enter="handleAfterEnter">
+                        <keep-alive>
+                            <router-view
+                                :key="$route.fullPath"
+                                v-if="!$route.meta.notKeepAlive"
+                                class="app-view"
+                                :class="{
+                                    'app-view-with-header': appHeader.show,
+                                    'app-view-with-footer': appBottomNavigator.show
+                                }"></router-view>
+                        </keep-alive>
+                    </transition>
+                    <transition
+                        :name="pageTransitionName"
+                        @before-enter="handleBeforeEnter"
+                        @after-enter="handleAfterEnter">
                         <router-view
                             :key="$route.fullPath"
-                            v-if="!$route.meta.notKeepAlive"
+                            v-if="$route.meta.notKeepAlive"
                             class="app-view"
                             :class="{
                                 'app-view-with-header': appHeader.show,
                                 'app-view-with-footer': appBottomNavigator.show
                             }"></router-view>
-                    </keep-alive>
-                </transition>
-                <transition
-                    :name="pageTransitionName"
-                    @before-enter="handleBeforeEnter"
-                    @after-enter="handleAfterEnter">
-                    <router-view
-                        :key="$route.fullPath"
-                        v-if="$route.meta.notKeepAlive"
-                        class="app-view"
-                        :class="{
-                            'app-view-with-header': appHeader.show,
-                            'app-view-with-footer': appBottomNavigator.show
-                        }"></router-view>
-                </transition>
+                    </transition>
+                </div>
+                <app-bottom-navigator
+                    class="app-shell-footer"
+                    @click-nav="handleClickBottomNav">
+                </app-bottom-navigator>
             </div>
-            <app-bottom-navigator
-                class="app-shell-footer"
-                @click-nav="handleClickBottomNav">
-            </app-bottom-navigator>
-        </div>
+        </v-app>
     </div>
 </template>
 

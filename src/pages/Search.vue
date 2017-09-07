@@ -16,8 +16,8 @@
         </div>
         <div v-if="data && data.length" class="search-content">
             <v-list two-line>
-                <div>
-                    <v-list-tile avatar ripple v-for="(item, index) in data" v-bind:key="item.title">
+                <template v-for="(item, index) in data">
+                    <v-list-tile avatar ripple v-bind:key="item.title">
                         <v-list-tile-content>
                             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                             <v-list-tile-sub-title class="grey--text text--darken-4">{{ item.headline }}</v-list-tile-sub-title>
@@ -29,7 +29,7 @@
                         </v-list-tile-action>
                     </v-list-tile>
                     <v-divider light v-if="index + 1 < data.length"></v-divider>
-                </div>
+                </template>
             </v-list>
         </div>
     </div>

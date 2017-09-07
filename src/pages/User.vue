@@ -8,8 +8,8 @@
                 <p>Lavas</p>
             </div>
             <v-list two-line>
-                <div>
-                    <v-list-tile avatar v-for="item in items" :key="item.title">
+                <template v-for="item in items">
+                    <v-list-tile avatar :key="item.title">
                         <v-list-tile-avatar>
                             <v-icon class="user-icon">{{ item.icon }}</v-icon>
                         </v-list-tile-avatar>
@@ -18,7 +18,7 @@
                             <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                </div>
+                </template>
             </v-list>
         </div>
     </div>
