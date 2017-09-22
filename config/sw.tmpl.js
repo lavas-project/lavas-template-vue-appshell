@@ -100,15 +100,6 @@ var stripIgnoredUrlParameters = function (originalUrl,
     return url.toString();
 };
 
-
-var addDirectoryIndex = function (originalUrl, index) {
-  var url = new URL(originalUrl);
-  if (url.pathname.slice(-1) === '/') {
-    url.pathname += index;
-  }
-  return url.toString();
-};
-
 var hashParamName = '_sw-precache';
 var urlsToCacheKeys = new Map(
     precacheConfig.map(function(item) {
