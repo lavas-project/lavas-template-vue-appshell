@@ -14,7 +14,7 @@
         "add-filehash",
         ["transform-imports", {
             "vuetify": {
-                "transform": "vuetify/src/components/${member}",
+                "transform": "vuetify/es5/components/${member}",
                 "preventFullImport": true
             }
         }]
