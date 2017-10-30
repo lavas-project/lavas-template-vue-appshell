@@ -17,7 +17,9 @@ exports.assetsPath = function (newPath) {
     return path.posix.join(assetsSubDirectory, newPath);
 };
 
-exports.cssLoaders = function (options = {}) {
+exports.cssLoaders = function (options) {
+    options = options || {};
+
     let cssLoader = {
         loader: 'css-loader',
         options: {
@@ -47,7 +49,7 @@ exports.cssLoaders = function (options = {}) {
             });
         }
 
-        return ['vue-style-loader', ...loaders];
+        return ['vue-style-loader'].concat(loaders);
     }
 
     // https://vue-loader.vuejs.org/en/configurations/extract-css.html
