@@ -5,6 +5,7 @@
             <div class="app-header-left">
                 <v-btn
                     icon
+                    dark
                     v-if="showMenu"
                     @click.native="handleClick('menu')">
                     <v-icon class="app-header-icon">menu</v-icon>
@@ -32,7 +33,8 @@
                     :icon="action.icon"
                     :route="action.route">
                     <v-btn
-                        icon="icon"
+                        icon
+                        dark
                         @click.native="handleClick('action', {actionIdx, route: action.route})">
                         <icon v-if="action.svg" :name="action.svg" class="app-header-icon"></icon>
                         <v-icon v-else-if="action.icon" class="app-header-icon">{{ action.icon }}</v-icon>

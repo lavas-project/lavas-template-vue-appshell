@@ -36,7 +36,7 @@ let devMiddleware = require('webpack-dev-middleware')(compiler, {
 });
 
 let hotMiddleware = require('webpack-hot-middleware')(compiler, {
-    log: function () {}
+    log() {}
 });
 
 // 当 html-webpack-plugin 的模版文件更新的时候，强制重新刷新调试页面
@@ -99,7 +99,7 @@ let server = app.listen(port);
 
 module.exports = {
     ready: readyPromise,
-    close: function () {
+    close() {
         server.close();
     }
 };

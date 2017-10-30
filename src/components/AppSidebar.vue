@@ -10,7 +10,7 @@
                 <span class="app-sidebar-title-left-icon">
                     <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft"></img>
                     <icon v-else-if="title.svgLeft" :name="title.svgLeft"></icon>
-                    <v-icon light v-else-if="title.iconLeft">{{ title.iconLeft }}</v-icon>
+                    <v-icon dark v-else-if="title.iconLeft">{{ title.iconLeft }}</v-icon>
                 </span>
                 <span>{{ title.text }}</span>
                 <slot name="logo" class="app-sidebar-title-right-logo">

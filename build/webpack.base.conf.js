@@ -79,7 +79,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                include: [resolve('src')]
+                include: [resolve('src'), resolve('build')]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
