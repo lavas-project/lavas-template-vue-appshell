@@ -283,7 +283,14 @@ export default {
          * 收起侧边栏
          */
         collapse() {
-            if (this.iscroll && this.iscroll.x > -this.itsWidth) {
+            if (!this.iscroll) {
+                return;
+            }
+
+            if (this.iscroll.x === -this.itsWidth) {
+                this.unbindScroll();
+            }
+            else if (this.iscroll.x > -this.itsWidth) {
                 // 解决部分机型在调用 scrollTo 完成的时候 不会触发 scrollEnd 事件的 bug
                 setTimeout(() => {
                     this.iscroll.scrollTo(-this.itsWidth, 0, this.duration);
