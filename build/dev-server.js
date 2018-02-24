@@ -72,6 +72,9 @@ app.use(devMiddleware);
 // 使用热更新， 如果编译出现错误会实时展示编译错误
 app.use(hotMiddleware);
 
+// 匹配vue-router类似/*.html这种特殊形式的路由
+app.use('*/*.html', devMiddleware)
+
 // 纯静态资源服务
 let staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
